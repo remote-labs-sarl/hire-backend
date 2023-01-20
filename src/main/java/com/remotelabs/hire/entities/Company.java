@@ -7,8 +7,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "technologies")
-public class Technology {
+@Table(name = "companies")
+public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,8 +16,4 @@ public class Technology {
 
     @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
-    private String logoUrl;
-    private String tags;
 }

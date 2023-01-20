@@ -7,17 +7,17 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "technologies")
-public class Technology {
+@Table(name = "candidates")
+public class Candidate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-
+    private String firstName;
+    private String middleName;
     @Column(nullable = false)
-    private String logoUrl;
+    private String lastName;
     private String tags;
 }
