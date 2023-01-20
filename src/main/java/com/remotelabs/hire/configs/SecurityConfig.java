@@ -43,7 +43,7 @@ public class SecurityConfig {
 
                 .requestMatchers("/**").authenticated()
                 .anyRequest()
-                .hasAnyRole("ADMIN", "USER")
+                .hasAnyRole("ADMIN", "USER", "RECRUITER")
                 .and()
                 .httpBasic(withDefaults())
                 .sessionManagement()
