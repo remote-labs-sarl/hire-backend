@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/technologies")
 @RequiredArgsConstructor
-@Tag(name = "AccountController")
+@Tag(name = "TechnologyController")
 public class TechnologyController {
 
     private final TechnologyService technologyService;
