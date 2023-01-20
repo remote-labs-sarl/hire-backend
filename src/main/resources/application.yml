@@ -9,7 +9,7 @@ spring:
     username: "hire_user"
     password: "hire_password"
   jpa:
-    hibernate.ddl-auto: none
+    hibernate.ddl-auto: create-drop
     generate-ddl: true
     show-sql: true
 flyway:
