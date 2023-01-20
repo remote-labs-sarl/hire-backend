@@ -23,8 +23,8 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 @AutoConfigureMockMvc(addFilters = false)
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-@Sql(scripts = {"/scripts/insert_countries.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@Sql(scripts = {"/scripts/insert_technologies.sql"}, executionPhase = BEFORE_TEST_METHOD)
+//@Sql(scripts = {"/scripts/insert_countries.sql"}, executionPhase = BEFORE_TEST_METHOD)
+//@Sql(scripts = {"/scripts/insert_technologies.sql"}, executionPhase = BEFORE_TEST_METHOD)
 public class BaseIntegrationTestsIT {
 
     @Autowired
