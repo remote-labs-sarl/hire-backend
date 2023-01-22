@@ -40,7 +40,7 @@ public class CandidateControllerIT extends BaseIntegrationTestsIT {
 
         CandidateFilter candidateFilter = new CandidateFilter();
         candidateFilter.setMainTechnologyId(1L);
-        candidateFilter.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE"));
+        candidateFilter.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE", "KIND"));
         candidateFilter.setType(DEVELOPER);
         candidateFilter.setLanguages(Arrays.asList(FRENCH, ENGLISH));
         candidateFilter.setCountryId(1L);
