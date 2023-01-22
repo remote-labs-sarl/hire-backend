@@ -34,6 +34,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
 
                 .requestMatchers(HttpMethod.GET, "/technologies").permitAll()
+                .requestMatchers(HttpMethod.GET, "/countries").permitAll()
+                .requestMatchers(HttpMethod.GET, "/candidates/filter").permitAll()
                 .requestMatchers(req -> req.getRequestURI().contains("swagger-ui")).permitAll()
                 .requestMatchers(req -> req.getRequestURI().contains("api-docs")).permitAll()
                 .requestMatchers(HttpMethod.GET, "/webjars/**").permitAll()
