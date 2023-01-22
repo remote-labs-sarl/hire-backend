@@ -8,7 +8,7 @@ public class DbContainer extends MySQLContainer<DbContainer> {
 
     private DbContainer(){
 
-        super("mysql");
+        super("mysql:8.0");
     }
 
     public static DbContainer getInstance(){
