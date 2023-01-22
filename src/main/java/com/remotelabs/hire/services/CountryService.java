@@ -17,6 +17,8 @@ public class CountryService {
 
     public List<CountryResource> findActiveCountries() {
 
-        return countryConverter.convertListOfCountriesToResources(countryRepository.findActiveCountries());
+        List<CountryResource> countryResources = countryConverter
+                .convertListOfCountriesToResources(countryRepository.findActiveCountries());
+        return countryResources;
     }
 }
