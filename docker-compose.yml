@@ -1,25 +1,16 @@
 version: '3.3'
 services:
   db:
-    image: "mysql:8.0"
-    restart: always
-    environment:
-      MYSQL_DATABASE: 'hire_db'
-      # So you don't have to use root, but you can if you like
-      MYSQL_USER: 'hire_user'
-      # You can use whatever password you like
-      MYSQL_PASSWORD: 'hire_password'
-      # Password for root access
-      MYSQL_ROOT_PASSWORD: 'hire_password'
+    container_name: "hire_db"
+    image: "postgres"
     ports:
-      # <Port exposed> : < MySQL Port running inside container>
-      - '3306:3306'
-    expose:
-      # Opens port 3306 on the container
-      - '3306'
-      # Where our data will be persisted
+      - "5436:5432"
+    environment:
+      POSTGRES_DB: "hire_db"
+      POSTGRES_USER: "hire_user"
+      POSTGRES_PASSWORD: "hire_password"
     volumes:
-      - hire-db:/var/lib/mysql
+      - 'data:/var/lib/postgresql/data'
 # Names our volume
 volumes:
-  hire-db:
+  data:

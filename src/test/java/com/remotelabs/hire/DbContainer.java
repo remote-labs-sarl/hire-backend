@@ -1,14 +1,14 @@
 package com.remotelabs.hire;
 
-import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
 
-public class DbContainer extends MySQLContainer<DbContainer> {
+public class DbContainer extends PostgreSQLContainer<DbContainer> {
 
     private static DbContainer dbContainer;
 
     private DbContainer(){
 
-        super("mysql:8.0");
+        super("postgres");
     }
 
     public static DbContainer getInstance(){

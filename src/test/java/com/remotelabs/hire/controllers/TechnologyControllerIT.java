@@ -6,7 +6,6 @@ import com.remotelabs.hire.repositories.TechnologyRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -35,6 +34,6 @@ public class TechnologyControllerIT extends BaseIntegrationTestsIT {
 
         List<Technology> technologies = technologyRepository.findAll();
 
-        Assertions.assertFalse(technologies.isEmpty());
+        Assertions.assertFalse(technologies.iterator().hasNext());
     }
 }

@@ -32,5 +32,5 @@ public class Candidate {
     private String languages;
 
     @ManyToOne
-    private Technology mainTechnology;
+    private Technology technology;
 }

@@ -4,12 +4,17 @@ spring:
   application:
     name: RemoteLabs-Hire-APi
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hire_db?autoreconnect=true
-    username: "hire_user"
-    password: "hire_password"
+    url: jdbc:postgresql://localhost:5436/hire_db
+    username: hire_user
+    password: hire_password
   jpa:
     hibernate.ddl-auto: none
     generate-ddl: true
     show-sql: true
+  flyway:
+    url: jdbc:postgresql://localhost:5436/hire_db
+    user: hire_user
+    password: hire_password
+    enabled: true
+
 
