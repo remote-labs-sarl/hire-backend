@@ -3,6 +3,7 @@ package com.remotelabs.hire.services;
 import com.remotelabs.hire.converters.CountryConverter;
 import com.remotelabs.hire.dtos.CountryResource;
 import com.remotelabs.hire.repositories.CountryRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,10 @@ public class CountryService {
     private final CountryRepository countryRepository;
     private final CountryConverter countryConverter;
 
+    @Transactional
     public List<CountryResource> findActiveCountries() {
 
-        List<CountryResource> countryResources = countryConverter
+        return countryConverter
                 .convertListOfCountriesToResources(countryRepository.findActiveCountries());
-        return countryResources;
     }
 }

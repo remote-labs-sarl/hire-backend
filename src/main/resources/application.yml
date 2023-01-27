@@ -16,5 +16,7 @@ spring:
     user: hire_user
     password: hire_password
     enabled: true
+flyway:
+  contexts: test
 
 

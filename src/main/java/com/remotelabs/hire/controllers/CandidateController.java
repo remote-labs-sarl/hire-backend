@@ -1,21 +1,15 @@
 package com.remotelabs.hire.controllers;
 
 import com.remotelabs.hire.dtos.CandidateResource;
-import com.remotelabs.hire.dtos.TechnologyResource;
-import com.remotelabs.hire.enums.CandidateType;
-import com.remotelabs.hire.filters.CandidateFilter;
+import com.remotelabs.hire.dtos.filters.CandidateFilter;
 import com.remotelabs.hire.services.CandidateService;
-import com.remotelabs.hire.services.TechnologyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/candidates")

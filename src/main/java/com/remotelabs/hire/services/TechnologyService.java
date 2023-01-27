@@ -4,6 +4,7 @@ import com.remotelabs.hire.converters.TechnologyToResourceConverter;
 import com.remotelabs.hire.dtos.TechnologyResource;
 import com.remotelabs.hire.entities.Technology;
 import com.remotelabs.hire.repositories.TechnologyRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ public class TechnologyService {
     private final TechnologyRepository technologyRepository;
     private final TechnologyToResourceConverter technologyToResourceConverter;
 
+    @Transactional
     public Page<TechnologyResource> getTechnologies(int page, int size, String keyword) {
 
         if (StringUtils.isEmpty(keyword)) {

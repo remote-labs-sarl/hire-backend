@@ -21,6 +21,8 @@ public class Candidate {
     private String middleName;
     @Column(nullable = false)
     private String lastName;
+    @Column(nullable = false)
+    private String email;
     private String tags;
     @Enumerated(EnumType.STRING)
     private CandidateType type;

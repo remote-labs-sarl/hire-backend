@@ -1,4 +1,4 @@
-package com.remotelabs.hire.filters;
+package com.remotelabs.hire.dtos.filters;
 
 import com.remotelabs.hire.enums.CandidateType;
 import com.remotelabs.hire.enums.Language;
@@ -24,8 +24,8 @@ public class CandidateFilter {
     private BigDecimal salaryExpectation;
     @NotNull(message = "Missing field countryId")
     private Long countryId;
-    private int yearsOfExperience;
-    private int noticePeriod;
+    private Integer yearsOfExperience;
+    private Integer noticePeriod;
     private List<Language> languages;
     private List<String> additionalTechnologies;
     private List<String> keywords;
