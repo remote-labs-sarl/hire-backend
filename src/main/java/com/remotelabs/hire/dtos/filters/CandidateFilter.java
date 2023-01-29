@@ -5,7 +5,6 @@ import com.remotelabs.hire.enums.Language;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,6 +26,6 @@ public class CandidateFilter {
     private Integer yearsOfExperience;
     private Integer noticePeriod;
     private List<Language> languages;
-    private List<String> additionalTechnologies;
+    private List<Long> additionalTechnologyIds;
     private List<String> keywords;
 }

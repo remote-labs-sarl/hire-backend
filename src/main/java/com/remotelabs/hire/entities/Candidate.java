@@ -1,11 +1,14 @@
 package com.remotelabs.hire.entities;
 
 import com.remotelabs.hire.enums.CandidateType;
+import com.remotelabs.hire.enums.Language;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,8 +34,20 @@ public class Candidate {
     private BigDecimal salaryExpectation;
     private int yearsOfExperience;
     private int noticePeriod;
-    private String languages;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "candidate_language",
+            joinColumns = @JoinColumn(name = "candidate_id"))
+    @Enumerated(EnumType.STRING)
+    private List<Language> languages;
 
     @ManyToOne
-    private Technology technology;
+    private Technology mainTechnology;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "candidate_technology",
+            joinColumns = @JoinColumn(name = "candidate_id"),
+            inverseJoinColumns = @JoinColumn(name = "technology_id"))
+    private Set<Technology> additionalTechnologies;
 }

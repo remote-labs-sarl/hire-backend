@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static com.remotelabs.hire.enums.CandidateType.DEVELOPER;
 import static com.remotelabs.hire.enums.Language.ENGLISH;
@@ -50,14 +51,14 @@ public class CandidateControllerIT extends BaseIntegrationTestsIT {
 
         CandidateFilter candidateFilter = new CandidateFilter();
         candidateFilter.setMainTechnologyId(1L);
-        candidateFilter.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE", "KIND"));
-        candidateFilter.setType(DEVELOPER);
+//        candidateFilter.setType(DEVELOPER);
+        candidateFilter.setSalaryExpectation(BigDecimal.valueOf(1000));
+//        candidateFilter.setCountryId(50L);
+        candidateFilter.setYearsOfExperience(5);
+//        candidateFilter.setNoticePeriod(30);
         candidateFilter.setLanguages(Arrays.asList(FRENCH, ENGLISH));
-        candidateFilter.setCountryId(50L);
-        candidateFilter.setNoticePeriod(30);
-        candidateFilter.setAdditionalTechnologies(Arrays.asList("NODEJS", "JS"));
-        candidateFilter.setSalaryExpectation(BigDecimal.valueOf(5000));
-
+//        candidateFilter.setAdditionalTechnologies(Arrays.asList("NODEJS", "JS"));
+//        candidateFilter.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE", "KIND"));
         return candidateFilter;
     }
 }

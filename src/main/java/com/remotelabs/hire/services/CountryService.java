@@ -2,12 +2,14 @@ package com.remotelabs.hire.services;
 
 import com.remotelabs.hire.converters.CountryConverter;
 import com.remotelabs.hire.dtos.CountryResource;
+import com.remotelabs.hire.entities.Country;
 import com.remotelabs.hire.repositories.CountryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class CountryService {
     @Transactional
     public List<CountryResource> findActiveCountries() {
 
-        return countryConverter
-                .convertListOfCountriesToResources(countryRepository.findActiveCountries());
+        List<Country> countries = countryRepository.findActiveCountries();
+        return countries.stream().map(countryConverter::convert).collect(Collectors.toList());
     }
 }
