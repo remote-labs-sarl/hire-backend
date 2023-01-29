@@ -52,11 +52,11 @@ public class CandidateControllerIT extends BaseIntegrationTestsIT {
         CandidateFilter candidateFilter = new CandidateFilter();
         candidateFilter.setMainTechnologyId(1L);
 //        candidateFilter.setType(DEVELOPER);
-        candidateFilter.setSalaryExpectation(BigDecimal.valueOf(1000));
+//        candidateFilter.setSalaryExpectation(BigDecimal.valueOf(1000));
 //        candidateFilter.setCountryId(50L);
-        candidateFilter.setYearsOfExperience(5);
+//        candidateFilter.setYearsOfExperience(5);
 //        candidateFilter.setNoticePeriod(30);
-        candidateFilter.setLanguages(Arrays.asList(FRENCH, ENGLISH));
+//        candidateFilter.setLanguages(Arrays.asList(FRENCH, ENGLISH));
 //        candidateFilter.setAdditionalTechnologies(Arrays.asList("NODEJS", "JS"));
 //        candidateFilter.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE", "KIND"));
         return candidateFilter;

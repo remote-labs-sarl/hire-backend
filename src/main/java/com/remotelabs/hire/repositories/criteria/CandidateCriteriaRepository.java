@@ -1,4 +1,4 @@
-package com.remotelabs.hire.repositories.specs;
+package com.remotelabs.hire.repositories.criteria;
 
 import com.remotelabs.hire.converters.CandidateConverter;
 import com.remotelabs.hire.dtos.CandidateResource;
@@ -6,6 +6,7 @@ import com.remotelabs.hire.dtos.filters.CandidateFilter;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.entities.Country;
 import com.remotelabs.hire.entities.Technology;
+import com.remotelabs.hire.enums.SortCandidateBy;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -21,40 +23,45 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class CandidateSpecs {
+public class CandidateCriteriaRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
     private final CandidateConverter candidateConverter;
 
-    public Page<CandidateResource> getCandidates(CandidateFilter candidateFilter, int page, int size) {
+    public Page<CandidateResource> findCandidatesByFilter(CandidateFilter candidateFilter, int page, int size) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Candidate> criteriaQuery = criteriaBuilder.createQuery(Candidate.class);
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Candidate> candidate = criteriaQuery.from(Candidate.class);
-        Join<Candidate, Country> country = candidate.join("country", JoinType.INNER);
-        Join<Candidate, Technology> mainTechnology = candidate.join("mainTechnology", JoinType.INNER);
+        Root<Candidate> candidateRoot = criteriaQuery.from(Candidate.class);
+        Join<Candidate, Country> candidateCountryJoin = candidateRoot.join("country", JoinType.INNER);
+        Join<Candidate, Technology> candidateTechnologyJoin = candidateRoot.join("mainTechnology", JoinType.INNER);
 
         List<Predicate> predicates = new ArrayList<>();
 
-        applyFilters(candidateFilter, criteriaBuilder, candidate, country, mainTechnology, predicates);
+        applyFilters(candidateFilter, criteriaBuilder, candidateRoot,
+                candidateCountryJoin, candidateTechnologyJoin, predicates);
 
         criteriaQuery
-                .select(candidate)
+                .select(candidateRoot)
                 .where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
 
         TypedQuery<Candidate> query = entityManager.createQuery(criteriaQuery);
-        query.setFirstResult((page) * size);
-        query.setMaxResults(size);
+
+        Sort sort = Sort.by("firstName").ascending();
+
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        query.setFirstResult((int) pageRequest.getOffset());
+        query.setMaxResults(pageRequest.getPageSize());
+
         List<Candidate> results = query.getResultList();
 
         countQuery.select(criteriaBuilder.count(countQuery.from(Candidate.class)));
         long totalElements = entityManager.createQuery(countQuery).getSingleResult();
 
-        Page<Candidate> candidates = new PageImpl<>(results, PageRequest.of(page, size), totalElements);
-        Page<CandidateResource> candidateResources = candidates.map(candidateConverter::convert);
-        return candidateResources;
+        Page<Candidate> candidates = new PageImpl<>(results, pageRequest, totalElements);
+        return candidates.map(candidateConverter::convert);
     }
 
     private static void applyFilters(CandidateFilter candidateFilter,
