@@ -112,7 +112,6 @@ public class CandidateCriteriaRepository {
                             criteriaBuilder.like(criteriaBuilder.lower(candidate.get("tags")),
                                     "%" + keyword.toLowerCase() + "%"),
                             criteriaBuilder.like(criteriaBuilder.lower(candidate.get("type")),
-                                    "%" + keyword.toLowerCase() + "%"))));
-        }
+                                    "%" + keyword.toLowerCase() + "%"))));}
     }
 }
