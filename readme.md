@@ -4,15 +4,15 @@ Prerequisites:
 
 Java 17 
 
-Docker
+Docker (to run the PostgresDB)
 
 IntelliJ
 
 To have the app running:
 
 
-1. Start the PostgreSQL database by
-   running the following docker command inside the project:  docker-compose up
+1. Start the DB by
+   running this docker command in the project:  docker-compose up
 
 2. Run the application.
 
