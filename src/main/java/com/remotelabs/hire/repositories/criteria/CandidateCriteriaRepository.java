@@ -7,6 +7,7 @@ import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.entities.Country;
 import com.remotelabs.hire.entities.Technology;
 import com.remotelabs.hire.enums.SortCandidateBy;
+import com.remotelabs.hire.enums.SortOrder;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -49,7 +51,7 @@ public class CandidateCriteriaRepository {
 
         TypedQuery<Candidate> query = entityManager.createQuery(criteriaQuery);
 
-        Sort sort = Sort.by("firstName").ascending();
+        Sort sort = applySorting(candidateFilter);
 
         PageRequest pageRequest = PageRequest.of(page, size, sort);
         query.setFirstResult((int) pageRequest.getOffset());
@@ -62,6 +64,35 @@ public class CandidateCriteriaRepository {
 
         Page<Candidate> candidates = new PageImpl<>(results, pageRequest, totalElements);
         return candidates.map(candidateConverter::convert);
+    }
+
+    private static Sort applySorting(CandidateFilter candidateFilter) {
+
+        Map<SortCandidateBy, SortOrder> sortBy = candidateFilter.getSortBy();
+        if (sortBy.containsKey(SortCandidateBy.FIRSTNAME)) {
+            if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.ASC) {
+                return Sort.by("firstName").ascending();
+            } else if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.DESC) {
+                return Sort.by("firstName").descending();
+            }
+        }
+
+       else if (sortBy.containsKey(SortCandidateBy.MIDDLE_NAME)) {
+            if (sortBy.get(SortCandidateBy.MIDDLE_NAME) == SortOrder.ASC) {
+                return Sort.by("middleName").ascending();
+            } else if (sortBy.get(SortCandidateBy.MIDDLE_NAME) == SortOrder.DESC) {
+                return Sort.by("middleName").descending();
+            }
+        }
+
+       else if (sortBy.containsKey(SortCandidateBy.LASTNAME)) {
+            if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.ASC) {
+                return Sort.by("firstName").ascending();
+            } else if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.DESC) {
+                return Sort.by("firstName").descending();
+            }
+        }
+        return Sort.by("firstName").ascending();
     }
 
     private static void applyFilters(CandidateFilter candidateFilter,
@@ -112,6 +143,7 @@ public class CandidateCriteriaRepository {
                             criteriaBuilder.like(criteriaBuilder.lower(candidate.get("tags")),
                                     "%" + keyword.toLowerCase() + "%"),
                             criteriaBuilder.like(criteriaBuilder.lower(candidate.get("type")),
-                                    "%" + keyword.toLowerCase() + "%"))));}
+                                    "%" + keyword.toLowerCase() + "%"))));
+        }
     }
 }
