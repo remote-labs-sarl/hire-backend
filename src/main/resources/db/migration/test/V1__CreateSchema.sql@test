@@ -1,18 +1,28 @@
+create table candidate_language
+(
+    candidate_id bigint not null,
+    languages    varchar(255)
+);
+create table candidate_technology
+(
+    candidate_id  bigint not null,
+    technology_id bigint not null,
+    primary key (candidate_id, technology_id)
+);
 create table candidates
 (
     id                  bigserial    not null,
+    email               varchar(255) not null,
     first_name          varchar(255) not null,
-    languages           varchar(255),
     last_name           varchar(255) not null,
     middle_name         varchar(255),
-    email         varchar(255),
     notice_period       integer      not null,
     salary_expectation  numeric(38, 2),
     tags                varchar(255),
     type                varchar(255),
     years_of_experience integer      not null,
     country_id          bigint,
-    technology_id       bigint,
+    main_technology_id  bigint,
     primary key (id)
 );
 create table companies
@@ -43,7 +53,9 @@ create table technologies
     tags     varchar(255),
     primary key (id)
 );
-alter table if exists countries drop constraint if exists UK_5dhgnik9p8t72kaktdb8kd8dt;
 alter table if exists countries add constraint UK_5dhgnik9p8t72kaktdb8kd8dt unique (code);
+alter table if exists candidate_language add constraint FK2cgkvwccdjdxgjnx8l05356ip foreign key (candidate_id) references candidates;
+alter table if exists candidate_technology add constraint FKciseho3w77faqofxdty4hbtag foreign key (technology_id) references technologies;
+alter table if exists candidate_technology add constraint FKdksytmpf3sl19egemist8epuv foreign key (candidate_id) references candidates;
 alter table if exists candidates add constraint FK54boc1c57wsvwsventskhsgde foreign key (country_id) references countries;
-alter table if exists candidates add constraint FK4s3s5g3pyj12yxffuyj4c34lo foreign key (technology_id) references technologies;
+alter table if exists candidates add constraint FKe7hi7mfxgoaoekwnciaomptk0 foreign key (main_technology_id) references technologies;
