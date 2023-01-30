@@ -2,9 +2,14 @@ This is a Spring Boot application that uses Java 17 and a Postgresql database ru
 
 Prerequisites:
 
-Java 17
+Java 17 
+
 Docker
+
 IntelliJ
+
+To have the app running:
+
 
 1. Start the PostgreSQL database by
    running the following docker command inside the project:  docker-compose up
