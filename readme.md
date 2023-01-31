@@ -4,14 +4,14 @@ Prerequisites:
 
 Java 17 
 
-Docker (to run the PostgresDB)
+Docker (to run the PostgresDB and Kafka)
 
 IntelliJ
 
 To have the app running:
 
 
-1. Start the DB by
+1. Start the DB and Kafka Cluster by
    running this docker command in the project:  docker-compose up
 
 2. Run the application.
