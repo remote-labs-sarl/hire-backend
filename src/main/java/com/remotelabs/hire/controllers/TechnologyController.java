@@ -1,6 +1,6 @@
 package com.remotelabs.hire.controllers;
 
-import com.remotelabs.hire.dtos.TechnologyResource;
+import com.remotelabs.hire.dtos.responses.TechnologyResource;
 import com.remotelabs.hire.services.TechnologyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

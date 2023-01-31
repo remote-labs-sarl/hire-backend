@@ -1,7 +1,7 @@
 package com.remotelabs.hire.services;
 
 import com.remotelabs.hire.converters.CountryConverter;
-import com.remotelabs.hire.dtos.CountryResource;
+import com.remotelabs.hire.dtos.responses.CountryResource;
 import com.remotelabs.hire.entities.Country;
 import com.remotelabs.hire.repositories.CountryRepository;
 import jakarta.transaction.Transactional;

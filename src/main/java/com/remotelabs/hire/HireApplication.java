@@ -1,14 +1,16 @@
 package com.remotelabs.hire;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication
+@RequiredArgsConstructor
 public class HireApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(HireApplication.class, args);
-	}
+    private final KafkaProducerService kafkaProducerService;
+
+    public static void main(String[] args) {
+        SpringApplication.run(HireApplication.class, args);
+    }
 }

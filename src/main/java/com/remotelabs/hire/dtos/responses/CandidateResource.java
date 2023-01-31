@@ -1,4 +1,4 @@
-package com.remotelabs.hire.dtos;
+package com.remotelabs.hire.dtos.responses;
 
 import lombok.Builder;
 import lombok.Getter;

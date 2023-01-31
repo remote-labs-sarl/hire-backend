@@ -1,6 +1,6 @@
 package com.remotelabs.hire.converters;
 
-import com.remotelabs.hire.dtos.CandidateResource;
+import com.remotelabs.hire.dtos.responses.CandidateResource;
 import com.remotelabs.hire.entities.Candidate;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +11,7 @@ public class CandidateConverter {
 
     public CandidateResource convert(Candidate candidate) {
 
+        // TODO: 31/01/2023 fix the hard coded percentage
         return CandidateResource.builder()
                 .id(candidate.getId())
                 .lastName(candidate.getLastName())

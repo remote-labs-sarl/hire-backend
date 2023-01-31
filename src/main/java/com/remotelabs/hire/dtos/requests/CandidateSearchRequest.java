@@ -1,4 +1,4 @@
-package com.remotelabs.hire.dtos.filters;
+package com.remotelabs.hire.dtos.requests;
 
 import com.remotelabs.hire.enums.CandidateType;
 import com.remotelabs.hire.enums.Language;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class CandidateFilter {
+public class CandidateSearchRequest {
 
     @NotNull(message = "Missing field mainTechnologyId")
     private Long mainTechnologyId;

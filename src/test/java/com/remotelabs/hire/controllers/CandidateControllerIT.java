@@ -1,7 +1,7 @@
 package com.remotelabs.hire.controllers;
 
 import com.remotelabs.hire.BaseIntegrationTestsIT;
-import com.remotelabs.hire.dtos.filters.CandidateFilter;
+import com.remotelabs.hire.dtos.requests.CandidateSearchRequest;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.repositories.CandidateRepository;
 import com.remotelabs.hire.utils.JsonCreator;
@@ -14,11 +14,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import static com.remotelabs.hire.enums.CandidateType.DEVELOPER;
 import static com.remotelabs.hire.enums.Language.ENGLISH;
 import static com.remotelabs.hire.enums.Language.FRENCH;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,6 +37,7 @@ public class CandidateControllerIT extends BaseIntegrationTestsIT {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(JsonCreator.convertToJson(createCandidateFilter()))
                         .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.length()", greaterThan(0)))
                 .andExpect(status().isOk());
     }
 
@@ -47,18 +48,18 @@ public class CandidateControllerIT extends BaseIntegrationTestsIT {
         Assertions.assertTrue(candidates.iterator().hasNext());
     }
 
-    private CandidateFilter createCandidateFilter() {
+    private CandidateSearchRequest createCandidateFilter() {
 
-        CandidateFilter candidateFilter = new CandidateFilter();
-        candidateFilter.setMainTechnologyId(1L);
-//        candidateFilter.setType(DEVELOPER);
-//        candidateFilter.setSalaryExpectation(BigDecimal.valueOf(1000));
-//        candidateFilter.setCountryId(50L);
-//        candidateFilter.setYearsOfExperience(5);
-//        candidateFilter.setNoticePeriod(30);
-//        candidateFilter.setLanguages(Arrays.asList(FRENCH, ENGLISH));
-//        candidateFilter.setAdditionalTechnologies(Arrays.asList("NODEJS", "JS"));
-//        candidateFilter.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE", "KIND"));
-        return candidateFilter;
+        CandidateSearchRequest candidateSearchRequest = new CandidateSearchRequest();
+        candidateSearchRequest.setMainTechnologyId(1L);
+        candidateSearchRequest.setType(DEVELOPER);
+        candidateSearchRequest.setSalaryExpectation(BigDecimal.valueOf(1000));
+        candidateSearchRequest.setCountryId(50L);
+        candidateSearchRequest.setYearsOfExperience(5);
+        candidateSearchRequest.setNoticePeriod(30);
+        candidateSearchRequest.setLanguages(Arrays.asList(FRENCH, ENGLISH));
+        candidateSearchRequest.setAdditionalTechnologyIds(Arrays.asList(1L, 2L));
+        candidateSearchRequest.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE", "KIND"));
+        return candidateSearchRequest;
     }
 }

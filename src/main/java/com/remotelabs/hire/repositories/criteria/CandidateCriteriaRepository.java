@@ -1,8 +1,8 @@
 package com.remotelabs.hire.repositories.criteria;
 
 import com.remotelabs.hire.converters.CandidateConverter;
-import com.remotelabs.hire.dtos.CandidateResource;
-import com.remotelabs.hire.dtos.filters.CandidateFilter;
+import com.remotelabs.hire.dtos.responses.CandidateResource;
+import com.remotelabs.hire.dtos.requests.CandidateSearchRequest;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.entities.Country;
 import com.remotelabs.hire.entities.Technology;
@@ -31,7 +31,7 @@ public class CandidateCriteriaRepository {
     private EntityManager entityManager;
     private final CandidateConverter candidateConverter;
 
-    public Page<CandidateResource> findCandidatesByFilter(CandidateFilter candidateFilter, int page, int size) {
+    public Page<CandidateResource> findCandidatesByFilter(CandidateSearchRequest candidateSearchRequest, int page, int size) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Candidate> criteriaQuery = criteriaBuilder.createQuery(Candidate.class);
@@ -42,7 +42,7 @@ public class CandidateCriteriaRepository {
 
         List<Predicate> predicates = new ArrayList<>();
 
-        applyFilters(candidateFilter, criteriaBuilder, candidateRoot,
+        applyFilters(candidateSearchRequest, criteriaBuilder, candidateRoot,
                 candidateCountryJoin, candidateTechnologyJoin, predicates);
 
         criteriaQuery
@@ -51,7 +51,7 @@ public class CandidateCriteriaRepository {
 
         TypedQuery<Candidate> query = entityManager.createQuery(criteriaQuery);
 
-        Sort sort = applySorting(candidateFilter);
+        Sort sort = applySorting(candidateSearchRequest);
 
         PageRequest pageRequest = PageRequest.of(page, size, sort);
         query.setFirstResult((int) pageRequest.getOffset());
@@ -66,9 +66,9 @@ public class CandidateCriteriaRepository {
         return candidates.map(candidateConverter::convert);
     }
 
-    private static Sort applySorting(CandidateFilter candidateFilter) {
+    private static Sort applySorting(CandidateSearchRequest candidateSearchRequest) {
 
-        Map<SortCandidateBy, SortOrder> sortBy = candidateFilter.getSortBy();
+        Map<SortCandidateBy, SortOrder> sortBy = candidateSearchRequest.getSortBy();
         if (sortBy.containsKey(SortCandidateBy.FIRSTNAME)) {
             if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.ASC) {
                 return Sort.by("firstName").ascending();
@@ -95,50 +95,50 @@ public class CandidateCriteriaRepository {
         return Sort.by("firstName").ascending();
     }
 
-    private static void applyFilters(CandidateFilter candidateFilter,
+    private static void applyFilters(CandidateSearchRequest candidateSearchRequest,
                                      CriteriaBuilder criteriaBuilder,
                                      Root<Candidate> candidate,
                                      Join<Candidate, Country> country,
                                      Join<Candidate, Technology> technology,
                                      List<Predicate> predicates) {
 
-        if (candidateFilter.getMainTechnologyId() != null) {
+        if (candidateSearchRequest.getMainTechnologyId() != null) {
 
             predicates.add(criteriaBuilder.equal(technology.get("id"),
-                    candidateFilter.getMainTechnologyId()));
+                    candidateSearchRequest.getMainTechnologyId()));
         }
-        if (candidateFilter.getType() != null) {
+        if (candidateSearchRequest.getType() != null) {
 
             predicates.add(criteriaBuilder.equal(criteriaBuilder.lower(candidate.get("type")),
-                    candidateFilter.getType().name().toLowerCase()));
+                    candidateSearchRequest.getType().name().toLowerCase()));
         }
-        if (candidateFilter.getSalaryExpectation() != null) {
+        if (candidateSearchRequest.getSalaryExpectation() != null) {
 
             predicates.add(criteriaBuilder.lessThanOrEqualTo(candidate.get("salaryExpectation"),
-                    candidateFilter.getSalaryExpectation()));
+                    candidateSearchRequest.getSalaryExpectation()));
         }
-        if (candidateFilter.getCountryId() != null) {
+        if (candidateSearchRequest.getCountryId() != null) {
 
             predicates.add(criteriaBuilder.equal(country.get("id"),
-                    candidateFilter.getCountryId()));
+                    candidateSearchRequest.getCountryId()));
         }
-        if (candidateFilter.getYearsOfExperience() != null) {
+        if (candidateSearchRequest.getYearsOfExperience() != null) {
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(candidate.get("yearsOfExperience"),
-                    candidateFilter.getYearsOfExperience()));
+                    candidateSearchRequest.getYearsOfExperience()));
         }
-        if (candidateFilter.getNoticePeriod() != null) {
+        if (candidateSearchRequest.getNoticePeriod() != null) {
 
             predicates.add(criteriaBuilder.lessThanOrEqualTo(candidate.get("noticePeriod"),
-                    candidateFilter.getNoticePeriod()));
+                    candidateSearchRequest.getNoticePeriod()));
         }
-        if (candidateFilter.getLanguages() != null && !candidateFilter.getLanguages().isEmpty()) {
+        if (candidateSearchRequest.getLanguages() != null && !candidateSearchRequest.getLanguages().isEmpty()) {
 
-            predicates.add(candidate.get("languages").in(candidateFilter.getLanguages()));
+            predicates.add(candidate.get("languages").in(candidateSearchRequest.getLanguages()));
         }
 
-        if (candidateFilter.getKeywords() != null && !candidateFilter.getKeywords().isEmpty()) {
+        if (candidateSearchRequest.getKeywords() != null && !candidateSearchRequest.getKeywords().isEmpty()) {
 
-            candidateFilter.getKeywords().forEach(keyword ->
+            candidateSearchRequest.getKeywords().forEach(keyword ->
                     predicates.add(criteriaBuilder.or(
                             criteriaBuilder.like(criteriaBuilder.lower(candidate.get("tags")),
                                     "%" + keyword.toLowerCase() + "%"),

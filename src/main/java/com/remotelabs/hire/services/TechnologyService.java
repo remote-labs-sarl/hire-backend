@@ -1,7 +1,7 @@
 package com.remotelabs.hire.services;
 
 import com.remotelabs.hire.converters.TechnologyToResourceConverter;
-import com.remotelabs.hire.dtos.TechnologyResource;
+import com.remotelabs.hire.dtos.responses.TechnologyResource;
 import com.remotelabs.hire.entities.Technology;
 import com.remotelabs.hire.repositories.TechnologyRepository;
 import jakarta.transaction.Transactional;

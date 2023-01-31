@@ -1,7 +1,7 @@
 package com.remotelabs.hire.converters;
 
 
-import com.remotelabs.hire.dtos.TechnologyResource;
+import com.remotelabs.hire.dtos.responses.TechnologyResource;
 import com.remotelabs.hire.entities.Technology;
 import org.springframework.stereotype.Component;
 

@@ -18,9 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class CountriesControllerIT extends BaseIntegrationTestsIT {
 
-    @Autowired
-    private TechnologyRepository technologyRepository;
-
     @Test
     void testGetCountries() throws Exception {
 
