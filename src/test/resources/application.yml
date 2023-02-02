@@ -7,7 +7,7 @@ spring:
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
     show-sql: true
   flyway:
-    enabled: true
+    enabled: false

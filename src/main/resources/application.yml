@@ -2,24 +2,24 @@ server:
   port: 8085
 spring:
   application:
-    name: RemoteLabs-Hire-APi
+    name: "RemoteLabs-Hire-APi"
   datasource:
-    url: jdbc:postgresql://localhost:5436/hire_db
-    username: hire_user
-    password: hire_password
+    url: "jdbc:postgresql://localhost:5436/hire_db"
+    username: "hire_user"
+    password: "hire_password"
   jpa:
     hibernate.ddl-auto: none
     generate-ddl: true
     show-sql: true
   flyway:
-    url: jdbc:postgresql://localhost:5436/hire_db
-    user: hire_user
-    password: hire_password
+    url: "jdbc:postgresql://localhost:5436/hire_db"
+    user: "hire_user"
+    password: "hire_password"
     enabled: true
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: "localhost:9092"
 flyway:
-  contexts: test
+  contexts: "test"
 
 
 

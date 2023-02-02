@@ -4,7 +4,7 @@ Prerequisites:
 
 Java 17 
 
-Docker (to run the PostgresDB and Kafka)
+Docker (to run the PostgresDB)
 
 IntelliJ
 
