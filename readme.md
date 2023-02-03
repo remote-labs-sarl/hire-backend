@@ -11,7 +11,7 @@ IntelliJ
 To have the app running:
 
 
-1. Start the DB and Kafka Cluster by
+1. Start the DB by
    running this docker command in the project:  docker-compose up
 
 2. Run the application.
