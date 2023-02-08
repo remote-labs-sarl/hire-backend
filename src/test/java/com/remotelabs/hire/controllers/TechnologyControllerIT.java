@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class TechnologyControllerIT extends BaseIntegrationTestsIT {
+class TechnologyControllerIT extends BaseIntegrationTestsIT {
 
     @Test
     void testGetAllTechnologies() throws Exception {

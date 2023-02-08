@@ -57,12 +57,10 @@ public class CandidateCriteriaRepository {
         query.setFirstResult((int) pageRequest.getOffset());
         query.setMaxResults(pageRequest.getPageSize());
 
-        List<Candidate> results = query.getResultList();
-
         countQuery.select(criteriaBuilder.count(countQuery.from(Candidate.class)));
         long totalElements = entityManager.createQuery(countQuery).getSingleResult();
 
-        Page<Candidate> candidates = new PageImpl<>(results, pageRequest, totalElements);
+        Page<Candidate> candidates = new PageImpl<>(query.getResultList(), pageRequest, totalElements);
         return candidates.map(candidateConverter::convert);
     }
 

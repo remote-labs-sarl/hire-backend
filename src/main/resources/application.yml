@@ -16,8 +16,6 @@ spring:
     user: "hire_user"
     password: "hire_password"
     enabled: true
-  kafka:
-    bootstrap-servers: "localhost:9092"
 flyway:
   contexts: "test"
 
