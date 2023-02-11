@@ -8,7 +8,7 @@ public class DbContainer extends PostgreSQLContainer<DbContainer> {
 
     private DbContainer(){
 
-        super("postgres");
+        super("postgres:15.2");
     }
 
     public static DbContainer getInstance(){
@@ -22,6 +22,8 @@ public class DbContainer extends PostgreSQLContainer<DbContainer> {
     @Override
     public void start() {
         super.start();
+        String jdbcUrl = dbContainer.getJdbcUrl();
+//        System.out.println(dbContainer.getJdbcUrl());
         System.setProperty("DB_URL", dbContainer.getJdbcUrl());
         System.setProperty("DB_USERNAME", dbContainer.getUsername());
         System.setProperty("DB_PASSWORD", dbContainer.getPassword());

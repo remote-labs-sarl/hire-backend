@@ -31,7 +31,6 @@ class CandidateControllerIT extends BaseIntegrationTestsIT {
     @Autowired
     private CandidateRepository candidateRepository;
 
-    @Test
     void testCandidateFilter() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders

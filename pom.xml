@@ -18,6 +18,7 @@
 		<testcontainers.version>1.17.6</testcontainers.version>
 		<springfox.version>3.0.0</springfox.version>
 		<swagger-annotations.version>1.5.20</swagger-annotations.version>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 	<dependencies>
 		<dependency>

@@ -2,7 +2,7 @@ version: '3.3'
 services:
   db:
     container_name: "hire_db"
-    image: "postgres"
+    image: "postgres:15.2"
     ports:
       - "5436:5432"
     environment:
