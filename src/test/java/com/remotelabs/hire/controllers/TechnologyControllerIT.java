@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class TechnologyControllerIT extends BaseIntegrationTestsIT {
 
+    // FIXME: 10/02/2023 assertion of length always return true even when there is no data
     @Test
     void testGetAllTechnologies() throws Exception {
 

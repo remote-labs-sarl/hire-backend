@@ -2,6 +2,7 @@ package com.remotelabs.hire.controllers;
 
 import com.remotelabs.hire.dtos.responses.TechnologyResource;
 import com.remotelabs.hire.services.TechnologyService;
+import com.remotelabs.hire.services.resourceservices.TechnologyResourceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.HttpStatus.OK;
+
 @RestController
 @RequestMapping("/technologies")
 @RequiredArgsConstructor
 @Tag(name = "TechnologyController")
 public class TechnologyController {
 
-    private final TechnologyService technologyService;
+    private final TechnologyResourceService technologyResourceService;
 
     @GetMapping("")
     @Operation(summary = "Get the list of technologies. ", description = "you can also filter by a keyword")
@@ -27,6 +30,6 @@ public class TechnologyController {
                                                                     @RequestParam int size,
                                                                     @RequestParam(required = false) String keyword){
 
-        return new ResponseEntity<>(technologyService.getTechnologies(page, size, keyword), HttpStatus.OK);
+        return new ResponseEntity<>(technologyResourceService.getTechnologies(page, size, keyword), OK);
     }
 }

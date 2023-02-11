@@ -49,5 +49,5 @@ public class Candidate {
             name = "candidate_technology",
             joinColumns = @JoinColumn(name = "candidate_id"),
             inverseJoinColumns = @JoinColumn(name = "technology_id"))
-    private Set<Technology> additionalTechnologies;
+    private List<Technology> additionalTechnologies;
 }

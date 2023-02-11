@@ -2,7 +2,7 @@ package com.remotelabs.hire.repositories.criteria;
 
 import com.remotelabs.hire.converters.CandidateConverter;
 import com.remotelabs.hire.dtos.responses.CandidateResource;
-import com.remotelabs.hire.dtos.requests.CandidateSearchRequest;
+import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.entities.Country;
 import com.remotelabs.hire.entities.Technology;
@@ -27,11 +27,15 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CandidateCriteriaRepository {
 
+    public static final String FIRST_NAME = "firstName";
+    public static final String MIDDLE_NAME = "middleName";
+    public static final String LAST_NAME = "lastName";
     @PersistenceContext
     private EntityManager entityManager;
     private final CandidateConverter candidateConverter;
 
-    public Page<CandidateResource> findCandidatesByFilter(CandidateSearchRequest candidateSearchRequest, int page, int size) {
+    public Page<Candidate> findCandidatesByFilter(CandidateSearchDto candidateSearchDto,
+                                                  int page, int size) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Candidate> criteriaQuery = criteriaBuilder.createQuery(Candidate.class);
@@ -42,7 +46,7 @@ public class CandidateCriteriaRepository {
 
         List<Predicate> predicates = new ArrayList<>();
 
-        applyFilters(candidateSearchRequest, criteriaBuilder, candidateRoot,
+        applyFilters(candidateSearchDto, criteriaBuilder, candidateRoot,
                 candidateCountryJoin, candidateTechnologyJoin, predicates);
 
         criteriaQuery
@@ -51,7 +55,7 @@ public class CandidateCriteriaRepository {
 
         TypedQuery<Candidate> query = entityManager.createQuery(criteriaQuery);
 
-        Sort sort = applySorting(candidateSearchRequest);
+        Sort sort = applySorting(candidateSearchDto);
 
         PageRequest pageRequest = PageRequest.of(page, size, sort);
         query.setFirstResult((int) pageRequest.getOffset());
@@ -61,82 +65,78 @@ public class CandidateCriteriaRepository {
         long totalElements = entityManager.createQuery(countQuery).getSingleResult();
 
         Page<Candidate> candidates = new PageImpl<>(query.getResultList(), pageRequest, totalElements);
-        return candidates.map(candidateConverter::convert);
+        return candidates;
     }
 
-    private static Sort applySorting(CandidateSearchRequest candidateSearchRequest) {
+    private static Sort applySorting(CandidateSearchDto candidateSearchDto) {
 
-        Map<SortCandidateBy, SortOrder> sortBy = candidateSearchRequest.getSortBy();
+        Map<SortCandidateBy, SortOrder> sortBy = candidateSearchDto.getSortBy();
         if (sortBy.containsKey(SortCandidateBy.FIRSTNAME)) {
             if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.ASC) {
-                return Sort.by("firstName").ascending();
+                return Sort.by(FIRST_NAME).ascending();
             } else if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.DESC) {
-                return Sort.by("firstName").descending();
+                return Sort.by(FIRST_NAME).descending();
             }
-        }
-
-       else if (sortBy.containsKey(SortCandidateBy.MIDDLE_NAME)) {
+        } else if (sortBy.containsKey(SortCandidateBy.MIDDLE_NAME)) {
             if (sortBy.get(SortCandidateBy.MIDDLE_NAME) == SortOrder.ASC) {
-                return Sort.by("middleName").ascending();
+                return Sort.by(MIDDLE_NAME).ascending();
             } else if (sortBy.get(SortCandidateBy.MIDDLE_NAME) == SortOrder.DESC) {
-                return Sort.by("middleName").descending();
+                return Sort.by(MIDDLE_NAME).descending();
             }
-        }
-
-       else if (sortBy.containsKey(SortCandidateBy.LASTNAME)) {
+        } else if (sortBy.containsKey(SortCandidateBy.LASTNAME)) {
             if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.ASC) {
-                return Sort.by("firstName").ascending();
+                return Sort.by(LAST_NAME).ascending();
             } else if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.DESC) {
-                return Sort.by("firstName").descending();
+                return Sort.by(LAST_NAME).descending();
             }
         }
-        return Sort.by("firstName").ascending();
+        return Sort.by(FIRST_NAME).ascending();
     }
 
-    private static void applyFilters(CandidateSearchRequest candidateSearchRequest,
+    private static void applyFilters(CandidateSearchDto candidateSearchDto,
                                      CriteriaBuilder criteriaBuilder,
                                      Root<Candidate> candidate,
                                      Join<Candidate, Country> country,
                                      Join<Candidate, Technology> technology,
                                      List<Predicate> predicates) {
 
-        if (candidateSearchRequest.getMainTechnologyId() != null) {
+        if (candidateSearchDto.getMainTechnologyId() != null) {
 
             predicates.add(criteriaBuilder.equal(technology.get("id"),
-                    candidateSearchRequest.getMainTechnologyId()));
+                    candidateSearchDto.getMainTechnologyId()));
         }
-        if (candidateSearchRequest.getType() != null) {
+        if (candidateSearchDto.getType() != null) {
 
             predicates.add(criteriaBuilder.equal(criteriaBuilder.lower(candidate.get("type")),
-                    candidateSearchRequest.getType().name().toLowerCase()));
+                    candidateSearchDto.getType().name().toLowerCase()));
         }
-        if (candidateSearchRequest.getSalaryExpectation() != null) {
+        if (candidateSearchDto.getSalaryExpectation() != null) {
 
             predicates.add(criteriaBuilder.lessThanOrEqualTo(candidate.get("salaryExpectation"),
-                    candidateSearchRequest.getSalaryExpectation()));
+                    candidateSearchDto.getSalaryExpectation()));
         }
-        if (candidateSearchRequest.getCountryId() != null) {
+        if (candidateSearchDto.getCountryId() != null) {
 
             predicates.add(criteriaBuilder.equal(country.get("id"),
-                    candidateSearchRequest.getCountryId()));
+                    candidateSearchDto.getCountryId()));
         }
-        if (candidateSearchRequest.getYearsOfExperience() != null) {
+        if (candidateSearchDto.getYearsOfExperience() != null) {
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(candidate.get("yearsOfExperience"),
-                    candidateSearchRequest.getYearsOfExperience()));
+                    candidateSearchDto.getYearsOfExperience()));
         }
-        if (candidateSearchRequest.getNoticePeriod() != null) {
+        if (candidateSearchDto.getNoticePeriod() != null) {
 
             predicates.add(criteriaBuilder.lessThanOrEqualTo(candidate.get("noticePeriod"),
-                    candidateSearchRequest.getNoticePeriod()));
+                    candidateSearchDto.getNoticePeriod()));
         }
-        if (candidateSearchRequest.getLanguages() != null && !candidateSearchRequest.getLanguages().isEmpty()) {
+        if (candidateSearchDto.getLanguages() != null && !candidateSearchDto.getLanguages().isEmpty()) {
 
-            predicates.add(candidate.get("languages").in(candidateSearchRequest.getLanguages()));
+            predicates.add(candidate.get("languages").in(candidateSearchDto.getLanguages()));
         }
 
-        if (candidateSearchRequest.getKeywords() != null && !candidateSearchRequest.getKeywords().isEmpty()) {
+        if (candidateSearchDto.getKeywords() != null && !candidateSearchDto.getKeywords().isEmpty()) {
 
-            candidateSearchRequest.getKeywords().forEach(keyword ->
+            candidateSearchDto.getKeywords().forEach(keyword ->
                     predicates.add(criteriaBuilder.or(
                             criteriaBuilder.like(criteriaBuilder.lower(candidate.get("tags")),
                                     "%" + keyword.toLowerCase() + "%"),

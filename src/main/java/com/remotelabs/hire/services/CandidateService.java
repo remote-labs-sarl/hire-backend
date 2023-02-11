@@ -1,22 +1,57 @@
 package com.remotelabs.hire.services;
 
+import com.remotelabs.hire.dtos.requests.AddCandidateDto;
 import com.remotelabs.hire.dtos.responses.CandidateResource;
-import com.remotelabs.hire.dtos.requests.CandidateSearchRequest;
+import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
+import com.remotelabs.hire.entities.Candidate;
+import com.remotelabs.hire.entities.Country;
+import com.remotelabs.hire.entities.Technology;
+import com.remotelabs.hire.repositories.CandidateRepository;
+import com.remotelabs.hire.repositories.CountryRepository;
 import com.remotelabs.hire.repositories.criteria.CandidateCriteriaRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CandidateService {
 
+    private final CountryService countryService;
+    private final TechnologyService technologyService;
+    private final CandidateRepository candidateRepository;
     private final CandidateCriteriaRepository candidateCriteriaRepository;
 
     @Transactional
-    public Page<CandidateResource> getCandidates(CandidateSearchRequest candidateSearchRequest, int page, int size) {
+    public Page<Candidate> getCandidates(CandidateSearchDto candidateSearchDto, int page, int size) {
 
-        return candidateCriteriaRepository.findCandidatesByFilter(candidateSearchRequest, page, size);
+        return candidateCriteriaRepository.findCandidatesByFilter(candidateSearchDto, page, size);
+    }
+
+    @Transactional
+    public void addCandidate(AddCandidateDto addCandidateDto) {
+
+        Country country = countryService.findById(addCandidateDto.getCountryId());
+
+        Candidate candidate = new Candidate();
+        candidate.setEmail(addCandidateDto.getEmail());
+        candidate.setLanguages(addCandidateDto.getLanguages());
+        candidate.setCountry(country);
+        candidate.setTags(addCandidateDto.getTags());
+        candidate.setFirstName(addCandidateDto.getFirstName());
+        candidate.setMiddleName(addCandidateDto.getMiddleName());
+        candidate.setLastName(addCandidateDto.getLastName());
+
+        Technology mainTechnology = technologyService.findById(addCandidateDto.getMainTechnologyId());
+        candidate.setMainTechnology(mainTechnology);
+
+        List<Technology>additionalTechnologies = technologyService
+                .findByIds(addCandidateDto.getAdditionalTechnologiesIds());
+        candidate.setAdditionalTechnologies(additionalTechnologies);
+
+        candidateRepository.save(candidate);
     }
 }

@@ -1,7 +1,7 @@
 package com.remotelabs.hire.controllers;
 
 import com.remotelabs.hire.BaseIntegrationTestsIT;
-import com.remotelabs.hire.dtos.requests.CandidateSearchRequest;
+import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.enums.SortCandidateBy;
 import com.remotelabs.hire.enums.SortOrder;
@@ -52,21 +52,21 @@ class CandidateControllerIT extends BaseIntegrationTestsIT {
         Assertions.assertTrue(candidates.iterator().hasNext());
     }
 
-    private CandidateSearchRequest createCandidateFilter() {
+    private CandidateSearchDto createCandidateFilter() {
 
-        CandidateSearchRequest candidateSearchRequest = new CandidateSearchRequest();
-        candidateSearchRequest.setMainTechnologyId(1L);
-        candidateSearchRequest.setType(DEVELOPER);
-        candidateSearchRequest.setSalaryExpectation(BigDecimal.valueOf(1000));
-        candidateSearchRequest.setCountryId(50L);
-        candidateSearchRequest.setYearsOfExperience(5);
-        candidateSearchRequest.setNoticePeriod(30);
-        candidateSearchRequest.setLanguages(Arrays.asList(FRENCH, ENGLISH));
-        candidateSearchRequest.setAdditionalTechnologyIds(Arrays.asList(1L, 2L));
-        candidateSearchRequest.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE", "KIND"));
+        CandidateSearchDto candidateSearchDto = new CandidateSearchDto();
+        candidateSearchDto.setMainTechnologyId(1L);
+        candidateSearchDto.setType(DEVELOPER);
+        candidateSearchDto.setSalaryExpectation(BigDecimal.valueOf(1000));
+        candidateSearchDto.setCountryId(50L);
+        candidateSearchDto.setYearsOfExperience(5);
+        candidateSearchDto.setNoticePeriod(30);
+        candidateSearchDto.setLanguages(Arrays.asList(FRENCH, ENGLISH));
+        candidateSearchDto.setAdditionalTechnologyIds(Arrays.asList(1L, 2L));
+        candidateSearchDto.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE", "KIND"));
         Map<SortCandidateBy, SortOrder> sortOrderMap = new HashMap<>();
         sortOrderMap.put(SortCandidateBy.FIRSTNAME, SortOrder.ASC);
-        candidateSearchRequest.setSortBy(sortOrderMap);
-        return candidateSearchRequest;
+        candidateSearchDto.setSortBy(sortOrderMap);
+        return candidateSearchDto;
     }
 }

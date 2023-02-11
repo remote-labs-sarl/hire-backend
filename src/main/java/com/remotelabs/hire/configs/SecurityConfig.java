@@ -33,6 +33,7 @@ public class SecurityConfig {
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
 
+                .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/technologies").permitAll()
                 .requestMatchers(HttpMethod.GET, "/countries").permitAll()
                 .requestMatchers(HttpMethod.GET, "/candidates/filter").permitAll()

@@ -15,9 +15,6 @@ spring:
     url: "jdbc:postgresql://localhost:5436/hire_db"
     user: "hire_user"
     password: "hire_password"
-    enabled: true
-flyway:
-  contexts: "test"
 
 
 
