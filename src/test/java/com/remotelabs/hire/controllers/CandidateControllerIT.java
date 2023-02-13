@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.math.BigDecimal;
@@ -23,14 +24,19 @@ import static com.remotelabs.hire.enums.CandidateType.DEVELOPER;
 import static com.remotelabs.hire.enums.Language.ENGLISH;
 import static com.remotelabs.hire.enums.Language.FRENCH;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Sql(scripts = {"/scripts/InsertCountries.sql"}, executionPhase = BEFORE_TEST_METHOD)
+@Sql(scripts = {"/scripts/InsertTechnologies.sql"}, executionPhase = BEFORE_TEST_METHOD)
+@Sql(scripts = {"/scripts/InsertCandidates.sql"}, executionPhase = BEFORE_TEST_METHOD)
 class CandidateControllerIT extends BaseIntegrationTestsIT {
 
     @Autowired
     private CandidateRepository candidateRepository;
 
+    @Test
     void testCandidateFilter() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders

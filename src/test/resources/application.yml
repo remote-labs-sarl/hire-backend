@@ -2,9 +2,10 @@ spring:
   application:
     name: remotelabs-hire
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:tc:postgresql:15.2:///hire_db
+  test:
+    database:
+      replace: none
   jpa:
     hibernate:
       ddl-auto: create
