@@ -6,7 +6,7 @@ import com.remotelabs.hire.entities.Technology;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TechnologyToResourceConverter {
+public class TechnologyConverter {
     public TechnologyResource convert(Technology technology){
 
         return TechnologyResource.builder()

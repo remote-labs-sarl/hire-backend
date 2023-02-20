@@ -1,5 +1,7 @@
 package com.remotelabs.hire.services;
 
+import com.remotelabs.hire.converters.TechnologyConverter;
+import com.remotelabs.hire.dtos.responses.TechnologyResource;
 import com.remotelabs.hire.entities.Technology;
 import com.remotelabs.hire.exceptions.HireException;
 import com.remotelabs.hire.repositories.TechnologyRepository;
@@ -18,15 +20,17 @@ import java.util.List;
 public class TechnologyService {
 
     private final TechnologyRepository technologyRepository;
+    private final TechnologyConverter technologyConverter;
 
     @Transactional
-    public Page<Technology> getTechnologies(int page, int size, String keyword) {
+    public Page<TechnologyResource> getTechnologies(int page, int size, String keyword) {
 
         if (StringUtils.isEmpty(keyword)) {
             keyword = "";
         }
         Pageable pageable = PageRequest.of(page, size);
-        return technologyRepository.findTechnologies(keyword, pageable);
+        Page<Technology> technologies = technologyRepository.findTechnologies(keyword, pageable);
+        return technologies.map(technologyConverter::convert);
     }
 
     public Technology findById(Long technologyId) {

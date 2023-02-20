@@ -10,19 +10,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CountryService {
 
     private final CountryRepository countryRepository;
+    private final CountryConverter countryConverter;
 
     @Transactional
-    public List<Country> findActiveCountries() {
+    public List<CountryResource> findActiveCountries() {
 
         List<Country> countries = countryRepository.findActiveCountries();
-        return countries;
+        return countries.stream().map(countryConverter::convert).toList();
     }
 
     public Country findById(Long countryId) {

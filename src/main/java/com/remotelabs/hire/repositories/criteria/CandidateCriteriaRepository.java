@@ -64,8 +64,7 @@ public class CandidateCriteriaRepository {
         countQuery.select(criteriaBuilder.count(countQuery.from(Candidate.class)));
         long totalElements = entityManager.createQuery(countQuery).getSingleResult();
 
-        Page<Candidate> candidates = new PageImpl<>(query.getResultList(), pageRequest, totalElements);
-        return candidates;
+        return new PageImpl<>(query.getResultList(), pageRequest, totalElements);
     }
 
     private static Sort applySorting(CandidateSearchDto candidateSearchDto) {

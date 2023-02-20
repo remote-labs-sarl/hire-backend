@@ -1,13 +1,13 @@
 package com.remotelabs.hire.services;
 
+import com.remotelabs.hire.converters.CandidateConverter;
 import com.remotelabs.hire.dtos.requests.AddCandidateDto;
-import com.remotelabs.hire.dtos.responses.CandidateResource;
 import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
+import com.remotelabs.hire.dtos.responses.CandidateResource;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.entities.Country;
 import com.remotelabs.hire.entities.Technology;
 import com.remotelabs.hire.repositories.CandidateRepository;
-import com.remotelabs.hire.repositories.CountryRepository;
 import com.remotelabs.hire.repositories.criteria.CandidateCriteriaRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +24,13 @@ public class CandidateService {
     private final TechnologyService technologyService;
     private final CandidateRepository candidateRepository;
     private final CandidateCriteriaRepository candidateCriteriaRepository;
+    private final CandidateConverter candidateConverter;
 
     @Transactional
-    public Page<Candidate> getCandidates(CandidateSearchDto candidateSearchDto, int page, int size) {
+    public Page<CandidateResource> getCandidates(CandidateSearchDto candidateSearchDto, int page, int size) {
 
-        return candidateCriteriaRepository.findCandidatesByFilter(candidateSearchDto, page, size);
+        Page<Candidate> candidates = candidateCriteriaRepository.findCandidatesByFilter(candidateSearchDto, page, size);
+        return candidates.map(candidateConverter::convert);
     }
 
     @Transactional

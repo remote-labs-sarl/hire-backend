@@ -3,7 +3,7 @@ package com.remotelabs.hire.controllers.admin;
 import com.remotelabs.hire.dtos.requests.AddCandidateDto;
 import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
 import com.remotelabs.hire.dtos.responses.CandidateResource;
-import com.remotelabs.hire.services.resourceservices.CandidateResourceService;
+import com.remotelabs.hire.services.CandidateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import static org.springframework.http.HttpStatus.OK;
 @Tag(name = "AdminCandidateController")
 public class AdminCandidateController {
 
-    private final CandidateResourceService candidateResourceService;
+    private final CandidateService candidateResourceService;
 
     @PostMapping("/filter")
     @Operation(description = "Admin Getting the list of candidates. ")
@@ -38,6 +38,4 @@ public class AdminCandidateController {
         candidateResourceService.addCandidate(addCandidateDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-    // TODO: 11/02/2023 HEY ALINA PLEASE DO THE ENDPOINTS FOR UPDATE, DELETE GET BY ID, THEN WRITE TESTS FOR THEM
 }
