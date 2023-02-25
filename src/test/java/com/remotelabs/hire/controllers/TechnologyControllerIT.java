@@ -1,6 +1,6 @@
 package com.remotelabs.hire.controllers;
 
-import com.remotelabs.hire.BaseIntegrationTestsIT;
+import com.remotelabs.hire.BaseIntegrationIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql(scripts = {"/scripts/InsertTechnologies.sql"}, executionPhase = BEFORE_TEST_METHOD)
-class TechnologyControllerIT extends BaseIntegrationTestsIT {
+class TechnologyControllerIT extends BaseIntegrationIT {
 
     // FIXME: 10/02/2023 assertion of length always return true even when there is no data
     @Test

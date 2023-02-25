@@ -1,6 +1,6 @@
 package com.remotelabs.hire.controllers;
 
-import com.remotelabs.hire.BaseIntegrationTestsIT;
+import com.remotelabs.hire.BaseIntegrationIT;
 import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.enums.SortCandidateBy;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(scripts = {"/scripts/InsertCountries.sql"}, executionPhase = BEFORE_TEST_METHOD)
 @Sql(scripts = {"/scripts/InsertTechnologies.sql"}, executionPhase = BEFORE_TEST_METHOD)
 @Sql(scripts = {"/scripts/InsertCandidates.sql"}, executionPhase = BEFORE_TEST_METHOD)
-class CandidateControllerIT extends BaseIntegrationTestsIT {
+class CandidateControllerIT extends BaseIntegrationIT {
 
     @Autowired
     private CandidateRepository candidateRepository;

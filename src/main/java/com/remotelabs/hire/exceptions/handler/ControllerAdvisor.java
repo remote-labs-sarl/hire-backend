@@ -1,6 +1,7 @@
 package com.remotelabs.hire.exceptions.handler;
 
-import com.remotelabs.hire.exceptions.HireException;
+import com.remotelabs.hire.exceptions.HireBadRequestException;
+import com.remotelabs.hire.exceptions.HireInternalException;
 import com.remotelabs.hire.exceptions.models.ApiError;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,14 +18,24 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(HireException.class)
-    public ResponseEntity<Object> handleHireException(HireException exception) {
+    @ExceptionHandler(HireInternalException.class)
+    public ResponseEntity<ApiError> handleHireInternalException(HireInternalException exception) {
 
         ApiError apiError = new ApiError();
         apiError.setTimestamp(LocalDateTime.now());
         apiError.setMessage(exception.getMessage());
         apiError.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(HireBadRequestException.class)
+    public ResponseEntity<ApiError> handleBadRequestException(HireBadRequestException exception) {
+
+        ApiError apiError = new ApiError();
+        apiError.setTimestamp(LocalDateTime.now());
+        apiError.setMessage(exception.getMessage());
+        apiError.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
     @Override

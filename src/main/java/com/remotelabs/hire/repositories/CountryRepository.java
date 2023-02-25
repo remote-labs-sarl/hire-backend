@@ -11,5 +11,4 @@ public interface CountryRepository extends JpaRepository<Country, Long> {
 
     @Query(value = "SELECT * FROM countries WHERE active = true AND deleted_at IS NULL ORDER BY id, name", nativeQuery = true)
     List<Country> findActiveCountries();
-    Optional<Country> findByCode(String code);
 }

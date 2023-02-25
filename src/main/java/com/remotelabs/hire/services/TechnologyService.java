@@ -3,7 +3,7 @@ package com.remotelabs.hire.services;
 import com.remotelabs.hire.converters.TechnologyConverter;
 import com.remotelabs.hire.dtos.responses.TechnologyResource;
 import com.remotelabs.hire.entities.Technology;
-import com.remotelabs.hire.exceptions.HireException;
+import com.remotelabs.hire.exceptions.HireInternalException;
 import com.remotelabs.hire.repositories.TechnologyRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class TechnologyService {
 
         return technologyRepository
                 .findById(technologyId)
-                .orElseThrow(() -> new HireException("Technology not found with id " + technologyId));
+                .orElseThrow(() -> new HireInternalException("Technology not found with id " + technologyId));
     }
 
     public List<Technology> findByIds(List<Long> technologiesIds){

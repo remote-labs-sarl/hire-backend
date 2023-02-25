@@ -1,15 +1,15 @@
 spring:
   datasource:
-    url: "jdbc:postgresql://ec2-52-18-116-67.eu-west-1.compute.amazonaws.com:5432/d36js1pph2v3hj"
-    username: "ofnnpcaeykikqe"
-    password: "531d007eec44b32aa2f2b580f97b822a03960944978d268657eefbc269787a8b"
+    url: "jdbc:postgresql://ec2-54-246-85-162.eu-west-1.compute.amazonaws.com:5432/dbq9flavg2nihv"
+    username: "ctqebnxfvgvyma"
+    password: "3f4ad6de86610bc516454de91a152000906daa33c35ffd98be128580f45ef505"
   jpa:
     hibernate.ddl-auto: none
     generate-ddl: true
     show-sql: true
   flyway:
-    url: "jdbc:postgresql://ec2-52-18-116-67.eu-west-1.compute.amazonaws.com:5432/d36js1pph2v3hj"
-    user: "ofnnpcaeykikqe"
-    password: "531d007eec44b32aa2f2b580f97b822a03960944978d268657eefbc269787a8b"
+    url: "jdbc:postgresql://ec2-54-246-85-162.eu-west-1.compute.amazonaws.com:5432/dbq9flavg2nihv"
+    user: "ctqebnxfvgvyma"
+    password: "3f4ad6de86610bc516454de91a152000906daa33c35ffd98be128580f45ef505"
 
 

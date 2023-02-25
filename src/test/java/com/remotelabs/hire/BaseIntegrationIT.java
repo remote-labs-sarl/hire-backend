@@ -19,11 +19,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ContextConfiguration(initializers = BaseIntegrationTestsIT.DataSourceInitializer.class)
+@ContextConfiguration(initializers = BaseIntegrationIT.DataSourceInitializer.class)
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class BaseIntegrationTestsIT {
+public class BaseIntegrationIT {
 
     @Autowired
     public MockMvc mockMvc;

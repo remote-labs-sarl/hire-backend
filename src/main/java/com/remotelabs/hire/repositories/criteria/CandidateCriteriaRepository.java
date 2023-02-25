@@ -1,7 +1,5 @@
 package com.remotelabs.hire.repositories.criteria;
 
-import com.remotelabs.hire.converters.CandidateConverter;
-import com.remotelabs.hire.dtos.responses.CandidateResource;
 import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.entities.Country;
@@ -32,7 +30,6 @@ public class CandidateCriteriaRepository {
     public static final String LAST_NAME = "lastName";
     @PersistenceContext
     private EntityManager entityManager;
-    private final CandidateConverter candidateConverter;
 
     public Page<Candidate> findCandidatesByFilter(CandidateSearchDto candidateSearchDto,
                                                   int page, int size) {
@@ -65,31 +62,6 @@ public class CandidateCriteriaRepository {
         long totalElements = entityManager.createQuery(countQuery).getSingleResult();
 
         return new PageImpl<>(query.getResultList(), pageRequest, totalElements);
-    }
-
-    private static Sort applySorting(CandidateSearchDto candidateSearchDto) {
-
-        Map<SortCandidateBy, SortOrder> sortBy = candidateSearchDto.getSortBy();
-        if (sortBy.containsKey(SortCandidateBy.FIRSTNAME)) {
-            if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.ASC) {
-                return Sort.by(FIRST_NAME).ascending();
-            } else if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.DESC) {
-                return Sort.by(FIRST_NAME).descending();
-            }
-        } else if (sortBy.containsKey(SortCandidateBy.MIDDLE_NAME)) {
-            if (sortBy.get(SortCandidateBy.MIDDLE_NAME) == SortOrder.ASC) {
-                return Sort.by(MIDDLE_NAME).ascending();
-            } else if (sortBy.get(SortCandidateBy.MIDDLE_NAME) == SortOrder.DESC) {
-                return Sort.by(MIDDLE_NAME).descending();
-            }
-        } else if (sortBy.containsKey(SortCandidateBy.LASTNAME)) {
-            if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.ASC) {
-                return Sort.by(LAST_NAME).ascending();
-            } else if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.DESC) {
-                return Sort.by(LAST_NAME).descending();
-            }
-        }
-        return Sort.by(FIRST_NAME).ascending();
     }
 
     private static void applyFilters(CandidateSearchDto candidateSearchDto,
@@ -142,5 +114,30 @@ public class CandidateCriteriaRepository {
                             criteriaBuilder.like(criteriaBuilder.lower(candidate.get("type")),
                                     "%" + keyword.toLowerCase() + "%"))));
         }
+    }
+
+    private static Sort applySorting(CandidateSearchDto candidateSearchDto) {
+
+        Map<SortCandidateBy, SortOrder> sortBy = candidateSearchDto.getSortBy();
+        if (sortBy.containsKey(SortCandidateBy.FIRSTNAME)) {
+            if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.ASC) {
+                return Sort.by(FIRST_NAME).ascending();
+            } else if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.DESC) {
+                return Sort.by(FIRST_NAME).descending();
+            }
+        } else if (sortBy.containsKey(SortCandidateBy.MIDDLE_NAME)) {
+            if (sortBy.get(SortCandidateBy.MIDDLE_NAME) == SortOrder.ASC) {
+                return Sort.by(MIDDLE_NAME).ascending();
+            } else if (sortBy.get(SortCandidateBy.MIDDLE_NAME) == SortOrder.DESC) {
+                return Sort.by(MIDDLE_NAME).descending();
+            }
+        } else if (sortBy.containsKey(SortCandidateBy.LASTNAME)) {
+            if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.ASC) {
+                return Sort.by(LAST_NAME).ascending();
+            } else if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.DESC) {
+                return Sort.by(LAST_NAME).descending();
+            }
+        }
+        return Sort.by(FIRST_NAME).ascending();
     }
 }

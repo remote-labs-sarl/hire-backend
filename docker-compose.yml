@@ -12,16 +12,46 @@ services:
     volumes:
       - 'data:/var/lib/postgresql/data'
   jenkins:
+    container_name: 'hire_jenkins'
     image: 'jenkins/jenkins:lts'
     privileged: true
     user: 'root'
     ports:
-     - "8080:8080"
+     - "9090:8080"
      - "50000:50000"
-    container_name: 'jenkins'
     volumes:
       - 'jenkins:/var/jenkins_home'
       - '/var/run/docker.sock:/var/run/docker.sock'
+  sonarqube:
+    container_name: 'hire_sonarqube'
+    image: sonarqube:8.9.2-community
+    platform: linux/amd64
+    depends_on:
+      - sonarqube-db
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar #tochange
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    ports:
+      - "9000:9000"
+  sonarqube-db:
+    container_name: 'hire_sonarqube_db'
+    image: postgres:15.2
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar #tochange
+    volumes:
+      - sonarqube_postgresql:/var/lib/postgresql
+      - sonarqube_postgresql_data:/var/lib/postgresql/data
 volumes:
   data:
   jenkins:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  sonarqube_postgresql:
+  sonarqube_postgresql_data:

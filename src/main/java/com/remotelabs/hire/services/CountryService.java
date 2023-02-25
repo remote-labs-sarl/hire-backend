@@ -3,7 +3,7 @@ package com.remotelabs.hire.services;
 import com.remotelabs.hire.converters.CountryConverter;
 import com.remotelabs.hire.dtos.responses.CountryResource;
 import com.remotelabs.hire.entities.Country;
-import com.remotelabs.hire.exceptions.HireException;
+import com.remotelabs.hire.exceptions.HireInternalException;
 import com.remotelabs.hire.repositories.CountryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +29,6 @@ public class CountryService {
 
         return countryRepository
                 .findById(countryId)
-                .orElseThrow(() -> new HireException("Country not found with id " + countryId));
+                .orElseThrow(() -> new HireInternalException("Country not found with id " + countryId));
     }
 }
