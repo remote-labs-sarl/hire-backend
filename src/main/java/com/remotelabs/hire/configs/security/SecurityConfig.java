@@ -1,16 +1,16 @@
-package com.remotelabs.hire.configs;
+package com.remotelabs.hire.configs.security;
 
-import com.remotelabs.hire.utils.AccountAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -20,19 +20,17 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final AccountAuthenticationProvider accountAuthenticationProvider;
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(accountAuthenticationProvider);
 
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
 
                 .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/technologies").permitAll()
                 .requestMatchers(HttpMethod.GET, "/countries").permitAll()
                 .requestMatchers(HttpMethod.GET, "/candidates/filter").permitAll()
@@ -42,14 +40,16 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v2/api-docs").permitAll()
                 .requestMatchers(HttpMethod.GET, "/csrf").permitAll()
                 .requestMatchers(HttpMethod.GET, "/").permitAll()
-
                 .requestMatchers("/**").authenticated()
                 .anyRequest()
-                .hasAnyRole("ADMIN", "USER", "RECRUITER")
+                .hasAnyRole("ADMIN", "CANDIDATE", "RECRUITER")
                 .and()
                 .httpBasic(withDefaults())
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
 

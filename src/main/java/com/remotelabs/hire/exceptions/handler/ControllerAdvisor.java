@@ -1,5 +1,6 @@
 package com.remotelabs.hire.exceptions.handler;
 
+import com.remotelabs.hire.exceptions.HireAuthException;
 import com.remotelabs.hire.exceptions.HireBadRequestException;
 import com.remotelabs.hire.exceptions.HireInternalException;
 import com.remotelabs.hire.exceptions.models.ApiError;
@@ -37,6 +38,17 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         apiError.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(HireAuthException.class)
+    public ResponseEntity<ApiError> handleBadRequestException(HireAuthException exception) {
+
+        ApiError apiError = new ApiError();
+        apiError.setTimestamp(LocalDateTime.now());
+        apiError.setMessage(exception.getMessage());
+        apiError.setStatusCode(HttpStatus.UNAUTHORIZED.value());
+        return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
+    }
+
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,

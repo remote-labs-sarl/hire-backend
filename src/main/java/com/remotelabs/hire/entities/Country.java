@@ -3,6 +3,7 @@ package com.remotelabs.hire.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -13,7 +14,7 @@ import java.util.Date;
 public class Country {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(updatable = false, nullable = false)
     private Long id;
     @Column(unique = true, nullable = false)
@@ -27,6 +28,10 @@ public class Country {
     @Column(name = "has_postal_code")
     private boolean hasPostalCode;
     private boolean active;
+
+    @CreationTimestamp
+    private Date creationDate;
+
     public Country(boolean active){
         this.active = active;
     }

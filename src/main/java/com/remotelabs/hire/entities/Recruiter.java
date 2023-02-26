@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "candidates")
-public class Candidate {
+public class Recruiter {
 
     @Id
     @GeneratedValue
@@ -25,19 +25,11 @@ public class Candidate {
     private String middleName;
     @Column(nullable = false)
     private String lastName;
-    private String tags;
-    @Enumerated(EnumType.STRING)
-    private CandidateType type;
-    @ManyToOne
-    private Country country;
-    private BigDecimal salaryExpectation;
-    private int yearsOfExperience;
-    private int noticePeriod;
 
     @OneToOne
     private User user;
-    @CreationTimestamp
-    private Date creationDate;
+    @ManyToOne
+    private Company company;
 
     @ElementCollection
     @CollectionTable(
@@ -54,4 +46,7 @@ public class Candidate {
             joinColumns = @JoinColumn(name = "candidate_id"),
             inverseJoinColumns = @JoinColumn(name = "technology_id"))
     private List<Technology> additionalTechnologies;
+
+    @CreationTimestamp
+    private Date creationDate;
 }

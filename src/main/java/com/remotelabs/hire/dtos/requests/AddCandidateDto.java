@@ -20,8 +20,6 @@ public class AddCandidateDto {
     private String middleName;
     @NotEmpty(message = "Missing required field lastName")
     private String lastName;
-    @NotEmpty(message = "Missing required field email")
-    private String email;
     private String tags;
     @NotNull(message = "Missing required field candidateType")
     private CandidateType candidateType;
@@ -37,4 +35,6 @@ public class AddCandidateDto {
     @NotNull(message = "Missing required field mainTechnologyId")
     private Long mainTechnologyId;
     private List<Long> additionalTechnologiesIds;
+    @NotNull
+    private UserCreationDto user;
 }

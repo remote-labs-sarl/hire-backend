@@ -7,6 +7,7 @@ import com.remotelabs.hire.dtos.responses.CandidateResource;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.entities.Country;
 import com.remotelabs.hire.entities.Technology;
+import com.remotelabs.hire.entities.User;
 import com.remotelabs.hire.repositories.CandidateRepository;
 import com.remotelabs.hire.repositories.criteria.CandidateCriteriaRepository;
 import jakarta.transaction.Transactional;
@@ -22,6 +23,7 @@ public class CandidateService {
 
     private final CountryService countryService;
     private final TechnologyService technologyService;
+    private final UserService userService;
     private final CandidateRepository candidateRepository;
     private final CandidateCriteriaRepository candidateCriteriaRepository;
     private final CandidateConverter candidateConverter;
@@ -38,14 +40,16 @@ public class CandidateService {
 
         Country country = countryService.findById(addCandidateDto.getCountryId());
 
+        User user = userService.createUser(addCandidateDto.getUser());
+
         Candidate candidate = new Candidate();
-        candidate.setEmail(addCandidateDto.getEmail());
         candidate.setLanguages(addCandidateDto.getLanguages());
         candidate.setCountry(country);
         candidate.setTags(addCandidateDto.getTags());
         candidate.setFirstName(addCandidateDto.getFirstName());
         candidate.setMiddleName(addCandidateDto.getMiddleName());
         candidate.setLastName(addCandidateDto.getLastName());
+        candidate.setUser(user);
 
         Technology mainTechnology = technologyService.findById(addCandidateDto.getMainTechnologyId());
         candidate.setMainTechnology(mainTechnology);

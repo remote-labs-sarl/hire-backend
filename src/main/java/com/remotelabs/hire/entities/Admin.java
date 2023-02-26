@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "candidates")
-public class Candidate {
+public class Admin {
 
     @Id
     @GeneratedValue
@@ -25,17 +25,10 @@ public class Candidate {
     private String middleName;
     @Column(nullable = false)
     private String lastName;
-    private String tags;
-    @Enumerated(EnumType.STRING)
-    private CandidateType type;
-    @ManyToOne
-    private Country country;
-    private BigDecimal salaryExpectation;
-    private int yearsOfExperience;
-    private int noticePeriod;
 
     @OneToOne
     private User user;
+
     @CreationTimestamp
     private Date creationDate;
 

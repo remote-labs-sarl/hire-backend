@@ -8,10 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "swagger")
-public class SwaggerPropertiesConfig {
+@ConfigurationProperties(prefix = "jwt")
+public class JwtPropertiesConfig {
 
-    private String title;
-    private String description;
-    private String version;
+    private String secretKey;
 }
