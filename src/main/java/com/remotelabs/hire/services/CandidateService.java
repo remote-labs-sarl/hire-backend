@@ -3,11 +3,14 @@ package com.remotelabs.hire.services;
 import com.remotelabs.hire.converters.CandidateConverter;
 import com.remotelabs.hire.dtos.requests.AddCandidateDto;
 import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
+import com.remotelabs.hire.dtos.requests.UpdateCandidateDto;
 import com.remotelabs.hire.dtos.responses.CandidateResource;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.entities.Country;
 import com.remotelabs.hire.entities.Technology;
 import com.remotelabs.hire.entities.User;
+import com.remotelabs.hire.enums.UserRole;
+import com.remotelabs.hire.exceptions.HireInternalException;
 import com.remotelabs.hire.repositories.CandidateRepository;
 import com.remotelabs.hire.repositories.criteria.CandidateCriteriaRepository;
 import jakarta.transaction.Transactional;
@@ -40,7 +43,7 @@ public class CandidateService {
 
         Country country = countryService.findById(addCandidateDto.getCountryId());
 
-        User user = userService.createUser(addCandidateDto.getUser());
+        User user = userService.createUser(addCandidateDto.getLoginDetails(), UserRole.CANDIDATE);
 
         Candidate candidate = new Candidate();
         candidate.setLanguages(addCandidateDto.getLanguages());
@@ -54,10 +57,38 @@ public class CandidateService {
         Technology mainTechnology = technologyService.findById(addCandidateDto.getMainTechnologyId());
         candidate.setMainTechnology(mainTechnology);
 
-        List<Technology>additionalTechnologies = technologyService
+        List<Technology> additionalTechnologies = technologyService
                 .findByIds(addCandidateDto.getAdditionalTechnologiesIds());
         candidate.setAdditionalTechnologies(additionalTechnologies);
 
         candidateRepository.save(candidate);
+    }
+
+    @Transactional
+    public void updateCandidate(Long candidateId, UpdateCandidateDto updateCandidateDto) {
+
+        Candidate candidate = getById(candidateId);
+        candidate.setTags(updateCandidateDto.getTags());
+        candidate.setFirstName(updateCandidateDto.getFirstName());
+        candidate.setMiddleName(updateCandidateDto.getMiddleName());
+        candidate.setLastName(updateCandidateDto.getLastName());
+        candidate.setLanguages(updateCandidateDto.getLanguages());
+        candidate.setNoticePeriod(updateCandidateDto.getNoticePeriod());
+        candidate.setSalaryExpectation(updateCandidateDto.getSalaryExpectation());
+        candidate.setType(updateCandidateDto.getCandidateType());
+
+        candidateRepository.save(candidate);
+    }
+
+    private Candidate getById(Long candidateId) {
+
+        return candidateRepository.findById(candidateId)
+                .orElseThrow(() -> new HireInternalException("Account not found"));
+    }
+
+    @Transactional
+    public void deleteCandidate(Long candidateId) {
+
+        candidateRepository.deleteById(candidateId);
     }
 }

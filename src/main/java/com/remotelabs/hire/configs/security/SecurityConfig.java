@@ -12,8 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -29,8 +27,8 @@ public class SecurityConfig {
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
 
-                .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
+                .requestMatchers("/management/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/technologies").permitAll()
                 .requestMatchers(HttpMethod.GET, "/countries").permitAll()
                 .requestMatchers(HttpMethod.GET, "/candidates/filter").permitAll()
@@ -39,18 +37,13 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/webjars/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/v2/api-docs").permitAll()
                 .requestMatchers(HttpMethod.GET, "/csrf").permitAll()
-                .requestMatchers(HttpMethod.GET, "/").permitAll()
-                .requestMatchers("/**").authenticated()
-                .anyRequest()
-                .hasAnyRole("ADMIN", "CANDIDATE", "RECRUITER")
+                .anyRequest().authenticated()
                 .and()
-                .httpBasic(withDefaults())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .authenticationProvider(authenticationProvider);
         return httpSecurity.build();
 
     }

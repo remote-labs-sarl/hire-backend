@@ -23,7 +23,7 @@ public class CandidateController {
 
     private final CandidateService candidateService;
 
-    @PostMapping("filter")
+    @PostMapping("")
     @Operation(summary = "Get the list of candidates. ", description = "Should return a list of available candidates")
     public ResponseEntity<Page<CandidateResource>> getCandidates(@RequestBody @Valid CandidateSearchDto searchDto,
                                                                  @RequestParam int page,

@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "candidates")
+@Table(name = "admins")
 public class Admin {
 
     @Id
@@ -31,20 +31,4 @@ public class Admin {
 
     @CreationTimestamp
     private Date creationDate;
-
-    @ElementCollection
-    @CollectionTable(
-            name = "candidate_language",
-            joinColumns = @JoinColumn(name = "candidate_id"))
-    @Enumerated(EnumType.STRING)
-    private List<Language> languages;
-
-    @ManyToOne
-    private Technology mainTechnology;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "candidate_technology",
-            joinColumns = @JoinColumn(name = "candidate_id"),
-            inverseJoinColumns = @JoinColumn(name = "technology_id"))
-    private List<Technology> additionalTechnologies;
 }

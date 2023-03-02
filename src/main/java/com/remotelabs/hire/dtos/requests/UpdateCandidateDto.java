@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class AddCandidateDto {
+public class UpdateCandidateDto {
 
     @NotEmpty(message = "Missing required field firstName")
     private String firstName;
