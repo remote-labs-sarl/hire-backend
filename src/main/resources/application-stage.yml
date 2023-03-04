@@ -4,7 +4,7 @@ spring:
     username: "ctqebnxfvgvyma"
     password: "3f4ad6de86610bc516454de91a152000906daa33c35ffd98be128580f45ef505"
   jpa:
-    hibernate.ddl-auto: none
+    hibernate.ddl-auto: create
     generate-ddl: true
     show-sql: true
   flyway:
