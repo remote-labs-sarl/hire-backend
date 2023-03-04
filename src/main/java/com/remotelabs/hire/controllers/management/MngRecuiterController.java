@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.remotelabs.hire.constants.Constants.AUTHORISATION;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -22,7 +23,7 @@ public class MngRecuiterController {
 
     private final RecruiterService recruiterService;
 
-    @PostMapping("/filter")
+    @PostMapping(value = "/filter", headers = AUTHORISATION)
     @Operation(description = "Admin Getting the list of recruiters. ")
     public ResponseEntity<Page<RecruiterResource>> getCandidates(@RequestParam int page,
                                                                  @RequestParam int size) {
@@ -30,7 +31,7 @@ public class MngRecuiterController {
         return new ResponseEntity<>(recruiterService.getAllRecruiters(page, size), OK);
     }
 
-    @PostMapping("")
+    @PostMapping(value = "", headers = AUTHORISATION)
     @Operation(description = "Add recruiter ")
     public ResponseEntity<Void> addRecruiter(@RequestBody AddRecruiterDto addRecruiterDto) {
 
@@ -38,7 +39,7 @@ public class MngRecuiterController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{recruiterId}")
+    @PutMapping(value = "/{recruiterId}", headers = AUTHORISATION)
     @Operation(description = "Update a recruiter")
     public ResponseEntity<Void> updateRecruiter(@PathVariable Long recruiterId,
                                                @RequestBody @Valid UpdateRecruiterDto updateRecruiterDto){
@@ -47,7 +48,7 @@ public class MngRecuiterController {
         return new ResponseEntity<>(OK);
     }
 
-    @DeleteMapping("/{recruiterId}")
+    @DeleteMapping(value = "/{recruiterId}", headers = AUTHORISATION)
     public ResponseEntity<Void> deleteRecruitier(@PathVariable Long recruiterId){
 
         recruiterService.deleteRecruiter(recruiterId);

@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.remotelabs.hire.constants.Constants.AUTHORISATION;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -24,7 +25,7 @@ public class MngCandidateController {
 
     private final CandidateService candidateService;
 
-    @PostMapping("/filter")
+    @PostMapping(value = "/filter", headers = AUTHORISATION)
     @Operation(description = "Admin Getting the list of candidates. ")
     public ResponseEntity<Page<CandidateResource>> getCandidates(@RequestBody CandidateSearchDto candidateSearchDto,
                                                                  @RequestParam int page,
@@ -33,7 +34,7 @@ public class MngCandidateController {
         return new ResponseEntity<>(candidateService.getCandidates(candidateSearchDto, page, size), OK);
     }
 
-    @PostMapping("")
+    @PostMapping(value = "", headers = AUTHORISATION)
     @Operation(description = "Add candidate ")
     public ResponseEntity<Void> addCandidate(@RequestBody AddCandidateDto addCandidateDto) {
 
@@ -41,7 +42,7 @@ public class MngCandidateController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{candidateId}")
+    @PutMapping(value = "/{candidateId}", headers = AUTHORISATION)
     @Operation(description = "Update a candidate")
     public ResponseEntity<Void> updateCandidate(@PathVariable Long candidateId,
                                                @RequestBody @Valid UpdateCandidateDto updateCandidateDto){
@@ -50,7 +51,7 @@ public class MngCandidateController {
         return new ResponseEntity<>(OK);
     }
 
-    @DeleteMapping("/{candidateId}")
+    @DeleteMapping(value = "/{candidateId}", headers = AUTHORISATION)
     public ResponseEntity<Void> deleteCandidate(@PathVariable Long candidateId){
 
         candidateService.deleteCandidate(candidateId);
