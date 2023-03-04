@@ -1,7 +1,7 @@
 package com.remotelabs.hire.controllers;
 
 import com.remotelabs.hire.dtos.responses.CandidateResource;
-import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
+import com.remotelabs.hire.dtos.requests.SearchCandidateDto;
 import com.remotelabs.hire.services.CandidateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,7 +25,7 @@ public class CandidateController {
 
     @PostMapping("")
     @Operation(summary = "Get the list of candidates. ", description = "Should return a list of available candidates")
-    public ResponseEntity<Page<CandidateResource>> getCandidates(@RequestBody @Valid CandidateSearchDto searchDto,
+    public ResponseEntity<Page<CandidateResource>> getCandidates(@RequestBody @Valid SearchCandidateDto searchDto,
                                                                  @RequestParam int page,
                                                                  @RequestParam int size) {
 

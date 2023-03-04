@@ -1,7 +1,7 @@
 package com.remotelabs.hire.controllers.management;
 
 import com.remotelabs.hire.dtos.requests.AddCandidateDto;
-import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
+import com.remotelabs.hire.dtos.requests.SearchCandidateDto;
 import com.remotelabs.hire.dtos.requests.UpdateCandidateDto;
 import com.remotelabs.hire.dtos.responses.CandidateResource;
 import com.remotelabs.hire.services.CandidateService;
@@ -27,11 +27,11 @@ public class MngCandidateController {
 
     @PostMapping(value = "/filter", headers = AUTHORISATION)
     @Operation(description = "Admin Getting the list of candidates. ")
-    public ResponseEntity<Page<CandidateResource>> getCandidates(@RequestBody CandidateSearchDto candidateSearchDto,
+    public ResponseEntity<Page<CandidateResource>> getCandidates(@RequestBody SearchCandidateDto searchCandidateDto,
                                                                  @RequestParam int page,
                                                                  @RequestParam int size) {
 
-        return new ResponseEntity<>(candidateService.getCandidates(candidateSearchDto, page, size), OK);
+        return new ResponseEntity<>(candidateService.getCandidates(searchCandidateDto, page, size), OK);
     }
 
     @PostMapping(value = "", headers = AUTHORISATION)

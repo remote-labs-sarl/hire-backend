@@ -2,7 +2,6 @@ package com.remotelabs.hire.services;
 
 import com.remotelabs.hire.converters.RecruiterConverter;
 import com.remotelabs.hire.dtos.requests.AddRecruiterDto;
-import com.remotelabs.hire.dtos.requests.AdminUpdateDto;
 import com.remotelabs.hire.dtos.requests.UpdateRecruiterDto;
 import com.remotelabs.hire.dtos.responses.RecruiterResource;
 import com.remotelabs.hire.entities.Recruiter;

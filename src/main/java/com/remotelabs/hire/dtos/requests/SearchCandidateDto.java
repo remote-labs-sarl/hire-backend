@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class CandidateSearchDto {
+public class SearchCandidateDto {
 
     @NotNull(message = "Missing field mainTechnologyId")
     private Long mainTechnologyId;

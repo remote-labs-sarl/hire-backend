@@ -1,7 +1,7 @@
 package com.remotelabs.hire.controllers;
 
 import com.remotelabs.hire.BaseIntegrationIT;
-import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
+import com.remotelabs.hire.dtos.requests.SearchCandidateDto;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.enums.SortCandidateBy;
 import com.remotelabs.hire.enums.SortOrder;
@@ -57,21 +57,21 @@ class CandidateControllerIT extends BaseIntegrationIT {
         Assertions.assertTrue(candidates.iterator().hasNext());
     }
 
-    private CandidateSearchDto createCandidateFilter() {
+    private SearchCandidateDto createCandidateFilter() {
 
-        CandidateSearchDto candidateSearchDto = new CandidateSearchDto();
-        candidateSearchDto.setMainTechnologyId(1L);
-        candidateSearchDto.setType(DEVELOPER);
-        candidateSearchDto.setSalaryExpectation(BigDecimal.valueOf(1000));
-        candidateSearchDto.setCountryId(50L);
-        candidateSearchDto.setYearsOfExperience(5);
-        candidateSearchDto.setNoticePeriod(30);
-        candidateSearchDto.setLanguages(Arrays.asList(FRENCH, ENGLISH));
-        candidateSearchDto.setAdditionalTechnologyIds(Arrays.asList(1L, 2L));
-        candidateSearchDto.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE", "KIND"));
+        SearchCandidateDto searchCandidateDto = new SearchCandidateDto();
+        searchCandidateDto.setMainTechnologyId(1L);
+        searchCandidateDto.setType(DEVELOPER);
+        searchCandidateDto.setSalaryExpectation(BigDecimal.valueOf(1000));
+        searchCandidateDto.setCountryId(50L);
+        searchCandidateDto.setYearsOfExperience(5);
+        searchCandidateDto.setNoticePeriod(30);
+        searchCandidateDto.setLanguages(Arrays.asList(FRENCH, ENGLISH));
+        searchCandidateDto.setAdditionalTechnologyIds(Arrays.asList(1L, 2L));
+        searchCandidateDto.setKeywords(Arrays.asList("GOOD", "DEDICATED", "PASSIONATE", "KIND"));
         Map<SortCandidateBy, SortOrder> sortOrderMap = new HashMap<>();
         sortOrderMap.put(SortCandidateBy.FIRSTNAME, SortOrder.ASC);
-        candidateSearchDto.setSortBy(sortOrderMap);
-        return candidateSearchDto;
+        searchCandidateDto.setSortBy(sortOrderMap);
+        return searchCandidateDto;
     }
 }

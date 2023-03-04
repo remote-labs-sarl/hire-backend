@@ -2,7 +2,7 @@ package com.remotelabs.hire.services;
 
 import com.remotelabs.hire.converters.CandidateConverter;
 import com.remotelabs.hire.dtos.requests.AddCandidateDto;
-import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
+import com.remotelabs.hire.dtos.requests.SearchCandidateDto;
 import com.remotelabs.hire.dtos.requests.UpdateCandidateDto;
 import com.remotelabs.hire.dtos.responses.CandidateResource;
 import com.remotelabs.hire.entities.Candidate;
@@ -12,6 +12,8 @@ import com.remotelabs.hire.entities.User;
 import com.remotelabs.hire.enums.UserRole;
 import com.remotelabs.hire.exceptions.HireInternalException;
 import com.remotelabs.hire.repositories.CandidateRepository;
+import com.remotelabs.hire.repositories.CountryRepository;
+import com.remotelabs.hire.repositories.TechnologyRepository;
 import com.remotelabs.hire.repositories.criteria.CandidateCriteriaRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CandidateService {
 
-    private final CountryService countryService;
+    private final CountryRepository countryRepository;
     private final TechnologyService technologyService;
     private final UserService userService;
     private final CandidateRepository candidateRepository;
@@ -32,16 +34,17 @@ public class CandidateService {
     private final CandidateConverter candidateConverter;
 
     @Transactional
-    public Page<CandidateResource> getCandidates(CandidateSearchDto candidateSearchDto, int page, int size) {
+    public Page<CandidateResource> getCandidates(SearchCandidateDto searchCandidateDto, int page, int size) {
 
-        Page<Candidate> candidates = candidateCriteriaRepository.findCandidatesByFilter(candidateSearchDto, page, size);
+        Page<Candidate> candidates = candidateCriteriaRepository.findCandidatesByFilter(searchCandidateDto, page, size);
         return candidates.map(candidateConverter::convert);
     }
 
     @Transactional
     public void addCandidate(AddCandidateDto addCandidateDto) {
 
-        Country country = countryService.findById(addCandidateDto.getCountryId());
+        Country country = countryRepository.findById(addCandidateDto.getCountryId())
+                .orElseThrow(() -> new HireInternalException("Country not found"));
 
         User user = userService.createUser(addCandidateDto.getLoginDetails(), UserRole.CANDIDATE);
 

@@ -1,8 +1,8 @@
 package com.remotelabs.hire.services;
 
 import com.remotelabs.hire.converters.AdminConverter;
-import com.remotelabs.hire.dtos.requests.AdminCreationDto;
-import com.remotelabs.hire.dtos.requests.AdminUpdateDto;
+import com.remotelabs.hire.dtos.requests.AddAdminDto;
+import com.remotelabs.hire.dtos.requests.UpdateAdminDto;
 import com.remotelabs.hire.dtos.responses.AdminResource;
 import com.remotelabs.hire.entities.Admin;
 import com.remotelabs.hire.entities.User;
@@ -31,25 +31,25 @@ public class AdminService {
     }
 
     @Transactional
-    public void addAdmin(AdminCreationDto adminCreationDto) {
+    public void addAdmin(AddAdminDto addAdminDto) {
 
         Admin admin = new Admin();
-        admin.setFirstName(adminCreationDto.getFirstName());
-        admin.setMiddleName(adminCreationDto.getMiddleName());
-        admin.setLastName(adminCreationDto.getLastName());
+        admin.setFirstName(addAdminDto.getFirstName());
+        admin.setMiddleName(addAdminDto.getMiddleName());
+        admin.setLastName(addAdminDto.getLastName());
 
-        User user = userService.createUser(adminCreationDto.getLoginDetails(), UserRole.ADMIN);
+        User user = userService.createUser(addAdminDto.getLoginDetails(), UserRole.ADMIN);
         admin.setUser(user);
         adminRepository.save(admin);
     }
 
     @Transactional
-    public void updateAdmin(Long adminId, AdminUpdateDto adminUpdateDto) {
+    public void updateAdmin(Long adminId, UpdateAdminDto updateAdminDto) {
 
         Admin admin = findById(adminId);
-        admin.setFirstName(adminUpdateDto.getFirstName());
-        admin.setMiddleName(adminUpdateDto.getMiddleName());
-        admin.setLastName(adminUpdateDto.getLastName());
+        admin.setFirstName(updateAdminDto.getFirstName());
+        admin.setMiddleName(updateAdminDto.getMiddleName());
+        admin.setLastName(updateAdminDto.getLastName());
         adminRepository.save(admin);
     }
 

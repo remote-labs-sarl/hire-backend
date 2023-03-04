@@ -2,7 +2,7 @@ package com.remotelabs.hire.services;
 
 import com.remotelabs.hire.configs.security.JwtService;
 import com.remotelabs.hire.dtos.requests.LoginRequest;
-import com.remotelabs.hire.dtos.requests.UserCreationDto;
+import com.remotelabs.hire.dtos.requests.AddUserDto;
 import com.remotelabs.hire.entities.User;
 import com.remotelabs.hire.enums.UserRole;
 import com.remotelabs.hire.exceptions.HireAuthException;
@@ -24,15 +24,15 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
 
     @Transactional
-    public User createUser(UserCreationDto userCreationDto, UserRole userRole) {
+    public User createUser(AddUserDto addUserDto, UserRole userRole) {
 
-        validateUserCreation(userCreationDto);
+        validateUserCreation(addUserDto);
 
         User user = new User();
         user.setUserRole(userRole);
-        user.setEmail(userCreationDto.getUsername());
+        user.setEmail(addUserDto.getUsername());
         user.setEnabled(true);
-        user.setPassword(passwordEncoder.encode(userCreationDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(addUserDto.getPassword()));
 
         return userRepository.save(user);
     }
@@ -49,9 +49,9 @@ public class UserService {
         return jwtService.generateToken(user);
     }
 
-    private void validateUserCreation(UserCreationDto userCreationDto) {
-        if (userRepository.findByEmail(userCreationDto.getUsername()).isPresent()) {
-            throw new HireInternalException(String.format("Email %s is already taken", userCreationDto.getUsername()));
+    private void validateUserCreation(AddUserDto addUserDto) {
+        if (userRepository.findByEmail(addUserDto.getUsername()).isPresent()) {
+            throw new HireInternalException(String.format("Email %s is already taken", addUserDto.getUsername()));
         }
     }
 }

@@ -16,5 +16,5 @@ public class AddRecruiterDto {
     private String lastName;
 
     @NotNull(message = "Missing required field loginDetails")
-    private UserCreationDto loginDetails;
+    private AddUserDto loginDetails;
 }

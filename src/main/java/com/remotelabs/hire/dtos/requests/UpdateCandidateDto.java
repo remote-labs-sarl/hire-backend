@@ -36,5 +36,5 @@ public class UpdateCandidateDto {
     private Long mainTechnologyId;
     private List<Long> additionalTechnologiesIds;
     @NotNull(message = "Missing required field loginDetails")
-    private UserCreationDto loginDetails;
+    private AddUserDto loginDetails;
 }

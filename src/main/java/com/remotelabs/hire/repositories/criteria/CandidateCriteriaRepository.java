@@ -1,6 +1,6 @@
 package com.remotelabs.hire.repositories.criteria;
 
-import com.remotelabs.hire.dtos.requests.CandidateSearchDto;
+import com.remotelabs.hire.dtos.requests.SearchCandidateDto;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.entities.Country;
 import com.remotelabs.hire.entities.Technology;
@@ -31,7 +31,7 @@ public class CandidateCriteriaRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Page<Candidate> findCandidatesByFilter(CandidateSearchDto candidateSearchDto,
+    public Page<Candidate> findCandidatesByFilter(SearchCandidateDto searchCandidateDto,
                                                   int page, int size) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -43,7 +43,7 @@ public class CandidateCriteriaRepository {
 
         List<Predicate> predicates = new ArrayList<>();
 
-        applyFilters(candidateSearchDto, criteriaBuilder, candidateRoot,
+        applyFilters(searchCandidateDto, criteriaBuilder, candidateRoot,
                 candidateCountryJoin, candidateTechnologyJoin, predicates);
 
         criteriaQuery
@@ -52,7 +52,7 @@ public class CandidateCriteriaRepository {
 
         TypedQuery<Candidate> query = entityManager.createQuery(criteriaQuery);
 
-        Sort sort = applySorting(candidateSearchDto);
+        Sort sort = applySorting(searchCandidateDto);
 
         PageRequest pageRequest = PageRequest.of(page, size, sort);
         query.setFirstResult((int) pageRequest.getOffset());
@@ -64,50 +64,50 @@ public class CandidateCriteriaRepository {
         return new PageImpl<>(query.getResultList(), pageRequest, totalElements);
     }
 
-    private static void applyFilters(CandidateSearchDto candidateSearchDto,
+    private static void applyFilters(SearchCandidateDto searchCandidateDto,
                                      CriteriaBuilder criteriaBuilder,
                                      Root<Candidate> candidate,
                                      Join<Candidate, Country> country,
                                      Join<Candidate, Technology> technology,
                                      List<Predicate> predicates) {
 
-        if (candidateSearchDto.getMainTechnologyId() != null) {
+        if (searchCandidateDto.getMainTechnologyId() != null) {
 
             predicates.add(criteriaBuilder.equal(technology.get("id"),
-                    candidateSearchDto.getMainTechnologyId()));
+                    searchCandidateDto.getMainTechnologyId()));
         }
-        if (candidateSearchDto.getType() != null) {
+        if (searchCandidateDto.getType() != null) {
 
             predicates.add(criteriaBuilder.equal(criteriaBuilder.lower(candidate.get("type")),
-                    candidateSearchDto.getType().name().toLowerCase()));
+                    searchCandidateDto.getType().name().toLowerCase()));
         }
-        if (candidateSearchDto.getSalaryExpectation() != null) {
+        if (searchCandidateDto.getSalaryExpectation() != null) {
 
             predicates.add(criteriaBuilder.lessThanOrEqualTo(candidate.get("salaryExpectation"),
-                    candidateSearchDto.getSalaryExpectation()));
+                    searchCandidateDto.getSalaryExpectation()));
         }
-        if (candidateSearchDto.getCountryId() != null) {
+        if (searchCandidateDto.getCountryId() != null) {
 
             predicates.add(criteriaBuilder.equal(country.get("id"),
-                    candidateSearchDto.getCountryId()));
+                    searchCandidateDto.getCountryId()));
         }
-        if (candidateSearchDto.getYearsOfExperience() != null) {
+        if (searchCandidateDto.getYearsOfExperience() != null) {
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(candidate.get("yearsOfExperience"),
-                    candidateSearchDto.getYearsOfExperience()));
+                    searchCandidateDto.getYearsOfExperience()));
         }
-        if (candidateSearchDto.getNoticePeriod() != null) {
+        if (searchCandidateDto.getNoticePeriod() != null) {
 
             predicates.add(criteriaBuilder.lessThanOrEqualTo(candidate.get("noticePeriod"),
-                    candidateSearchDto.getNoticePeriod()));
+                    searchCandidateDto.getNoticePeriod()));
         }
-        if (candidateSearchDto.getLanguages() != null && !candidateSearchDto.getLanguages().isEmpty()) {
+        if (searchCandidateDto.getLanguages() != null && !searchCandidateDto.getLanguages().isEmpty()) {
 
-            predicates.add(candidate.get("languages").in(candidateSearchDto.getLanguages()));
+            predicates.add(candidate.get("languages").in(searchCandidateDto.getLanguages()));
         }
 
-        if (candidateSearchDto.getKeywords() != null && !candidateSearchDto.getKeywords().isEmpty()) {
+        if (searchCandidateDto.getKeywords() != null && !searchCandidateDto.getKeywords().isEmpty()) {
 
-            candidateSearchDto.getKeywords().forEach(keyword ->
+            searchCandidateDto.getKeywords().forEach(keyword ->
                     predicates.add(criteriaBuilder.or(
                             criteriaBuilder.like(criteriaBuilder.lower(candidate.get("tags")),
                                     "%" + keyword.toLowerCase() + "%"),
@@ -116,9 +116,9 @@ public class CandidateCriteriaRepository {
         }
     }
 
-    private static Sort applySorting(CandidateSearchDto candidateSearchDto) {
+    private static Sort applySorting(SearchCandidateDto searchCandidateDto) {
 
-        Map<SortCandidateBy, SortOrder> sortBy = candidateSearchDto.getSortBy();
+        Map<SortCandidateBy, SortOrder> sortBy = searchCandidateDto.getSortBy();
         if (sortBy.containsKey(SortCandidateBy.FIRSTNAME)) {
             if (sortBy.get(SortCandidateBy.FIRSTNAME) == SortOrder.ASC) {
                 return Sort.by(FIRST_NAME).ascending();

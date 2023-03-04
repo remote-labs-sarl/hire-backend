@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AdminCreationDto {
+public class UpdateAdminDto {
 
     @NotNull(message = "Missing required field firstName")
     private String firstName;
@@ -14,7 +14,4 @@ public class AdminCreationDto {
     private String middleName;
     @NotNull(message = "Missing required field lastName")
     private String lastName;
-
-    @NotNull(message = "Missing required field loginDetails")
-    private UserCreationDto loginDetails;
 }

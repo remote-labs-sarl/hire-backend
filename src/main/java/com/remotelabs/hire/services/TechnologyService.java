@@ -1,6 +1,8 @@
 package com.remotelabs.hire.services;
 
 import com.remotelabs.hire.converters.TechnologyConverter;
+import com.remotelabs.hire.dtos.requests.AddTechnologyDto;
+import com.remotelabs.hire.dtos.requests.UpdateTechnologyDto;
 import com.remotelabs.hire.dtos.responses.TechnologyResource;
 import com.remotelabs.hire.entities.Technology;
 import com.remotelabs.hire.exceptions.HireInternalException;
@@ -33,6 +35,34 @@ public class TechnologyService {
         return technologies.map(technologyConverter::convert);
     }
 
+    @Transactional
+    public void addTechnology(AddTechnologyDto addTechnologyDto) {
+
+        Technology technology = new Technology();
+        technology.setTags(addTechnologyDto.getTags());
+        technology.setName(addTechnologyDto.getName());
+        technology.setLogoUrl(addTechnologyDto.getLogoUrl());
+
+        technologyRepository.save(technology);
+    }
+
+    @Transactional
+    public void updateTechnology(Long technologyId, UpdateTechnologyDto updateTechnologyDto) {
+
+        Technology technology = findById(technologyId);
+        technology.setLogoUrl(updateTechnologyDto.getLogoUrl());
+        technology.setTags(updateTechnologyDto.getTags());
+        technology.setName(updateTechnologyDto.getName());
+        technologyRepository.save(technology);
+    }
+
+    @Transactional
+    public void deleteTechnology(Long technologyId){
+
+        technologyRepository.deleteById(technologyId);
+    }
+
+    @Transactional
     public Technology findById(Long technologyId) {
 
         return technologyRepository
@@ -40,7 +70,8 @@ public class TechnologyService {
                 .orElseThrow(() -> new HireInternalException("Technology not found with id " + technologyId));
     }
 
-    public List<Technology> findByIds(List<Long> technologiesIds){
+    @Transactional
+    public List<Technology> findByIds(List<Long> technologiesIds) {
 
         return technologyRepository.findByIds(technologiesIds);
     }
