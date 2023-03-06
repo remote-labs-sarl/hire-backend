@@ -76,10 +76,10 @@ public class CandidateCriteriaRepository {
             predicates.add(criteriaBuilder.equal(technology.get("id"),
                     searchCandidateDto.getMainTechnologyId()));
         }
-        if (searchCandidateDto.getType() != null) {
+        if (searchCandidateDto.getRole() != null) {
 
             predicates.add(criteriaBuilder.equal(criteriaBuilder.lower(candidate.get("type")),
-                    searchCandidateDto.getType().name().toLowerCase()));
+                    searchCandidateDto.getRole().name().toLowerCase()));
         }
         if (searchCandidateDto.getSalaryExpectation() != null) {
 

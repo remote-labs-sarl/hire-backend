@@ -13,7 +13,6 @@ import com.remotelabs.hire.enums.UserRole;
 import com.remotelabs.hire.exceptions.HireInternalException;
 import com.remotelabs.hire.repositories.CandidateRepository;
 import com.remotelabs.hire.repositories.CountryRepository;
-import com.remotelabs.hire.repositories.TechnologyRepository;
 import com.remotelabs.hire.repositories.criteria.CandidateCriteriaRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +77,7 @@ public class CandidateService {
         candidate.setLanguages(updateCandidateDto.getLanguages());
         candidate.setNoticePeriod(updateCandidateDto.getNoticePeriod());
         candidate.setSalaryExpectation(updateCandidateDto.getSalaryExpectation());
-        candidate.setType(updateCandidateDto.getCandidateType());
+        candidate.setType(updateCandidateDto.getCandidateRole());
 
         candidateRepository.save(candidate);
     }

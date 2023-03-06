@@ -1,6 +1,6 @@
 package com.remotelabs.hire.entities;
 
-import com.remotelabs.hire.enums.CandidateType;
+import com.remotelabs.hire.enums.CandidateRole;
 import com.remotelabs.hire.enums.Language;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class Candidate {
     private String lastName;
     private String tags;
     @Enumerated(EnumType.STRING)
-    private CandidateType type;
+    private CandidateRole type;
     @ManyToOne
     private Country country;
     private BigDecimal salaryExpectation;

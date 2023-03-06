@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.remotelabs.hire.enums.CandidateType.DEVELOPER;
+import static com.remotelabs.hire.enums.CandidateRole.DEVELOPER;
 import static com.remotelabs.hire.enums.Language.ENGLISH;
 import static com.remotelabs.hire.enums.Language.FRENCH;
 import static org.hamcrest.Matchers.greaterThan;
@@ -61,7 +61,7 @@ class CandidateControllerIT extends BaseIntegrationIT {
 
         SearchCandidateDto searchCandidateDto = new SearchCandidateDto();
         searchCandidateDto.setMainTechnologyId(1L);
-        searchCandidateDto.setType(DEVELOPER);
+        searchCandidateDto.setRole(DEVELOPER);
         searchCandidateDto.setSalaryExpectation(BigDecimal.valueOf(1000));
         searchCandidateDto.setCountryId(50L);
         searchCandidateDto.setYearsOfExperience(5);

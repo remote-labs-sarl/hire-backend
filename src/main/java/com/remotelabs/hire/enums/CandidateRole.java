@@ -1,5 +1,5 @@
 package com.remotelabs.hire.enums;
 
-public enum CandidateType {
+public enum CandidateRole {
     DEVELOPER, ARCHITECT, PROJECT_MANAGER
 }
