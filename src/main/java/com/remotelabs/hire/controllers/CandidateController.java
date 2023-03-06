@@ -16,7 +16,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @Validated
 @RestController
-@RequestMapping("/candidates")
+@RequestMapping("/public/candidates")
 @RequiredArgsConstructor
 @Tag(name = "CandidateController")
 public class CandidateController {
