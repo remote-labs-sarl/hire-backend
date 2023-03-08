@@ -15,7 +15,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/countries")
+@RequestMapping("/public/countries")
 @RequiredArgsConstructor
 @Tag(name = "CountryController")
 public class CountryController {

@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://mouse.db.elephantsql.com:5432/pogladkx"
+    username: "pogladkx"
+    password: "JOZDpl0wEsGck6mTOG_VA4wfZv5Yquqs"

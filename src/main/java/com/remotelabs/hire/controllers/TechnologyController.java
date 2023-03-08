@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/technologies")
+@RequestMapping("/public/technologies")
 @RequiredArgsConstructor
 @Tag(name = "TechnologyController")
 public class TechnologyController {

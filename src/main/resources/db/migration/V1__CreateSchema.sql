@@ -57,16 +57,22 @@ create table countries
     name            varchar(255),
     primary key (id)
 );
+create table job_roles
+(
+    id            bigint not null,
+    creation_date timestamp(6),
+    name          varchar(255),
+    primary key (id)
+);
 create table recruiters
 (
-    id                 bigint       not null,
-    creation_date      timestamp(6),
-    first_name         varchar(255) not null,
-    last_name          varchar(255) not null,
-    middle_name        varchar(255),
-    company_id         bigint,
-    main_technology_id bigint,
-    user_id            bigint,
+    id            bigint       not null,
+    creation_date timestamp(6),
+    first_name    varchar(255) not null,
+    last_name     varchar(255) not null,
+    middle_name   varchar(255),
+    company_id    bigint,
+    user_id       bigint,
     primary key (id)
 );
 create table technologies
@@ -90,12 +96,11 @@ create table users
 alter table if exists countries add constraint UK_5dhgnik9p8t72kaktdb8kd8dt unique (code);
 alter table if exists users add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email);
 alter table if exists admins add constraint FKgc8dtql9mkq268detxiox7fpm foreign key (user_id) references users;
-alter table if exists candidate_language add constraint FKauxcf2ga6iac6gpaxferocxat foreign key (candidate_id) references candidates;
+alter table if exists candidate_language add constraint FK2cgkvwccdjdxgjnx8l05356ip foreign key (candidate_id) references candidates;
 alter table if exists candidate_technology add constraint FKciseho3w77faqofxdty4hbtag foreign key (technology_id) references technologies;
-alter table if exists candidate_technology add constraint FK40anp6nsd5kc00ddsdw4c9p32 foreign key (candidate_id) references candidates;
+alter table if exists candidate_technology add constraint FKdksytmpf3sl19egemist8epuv foreign key (candidate_id) references candidates;
 alter table if exists candidates add constraint FK54boc1c57wsvwsventskhsgde foreign key (country_id) references countries;
 alter table if exists candidates add constraint FKe7hi7mfxgoaoekwnciaomptk0 foreign key (main_technology_id) references technologies;
 alter table if exists candidates add constraint FKme4fkelukmx2s63tlcrft6hio foreign key (user_id) references users;
 alter table if exists recruiters add constraint FKbfxdaa7me3dlmmd3hqd2uqpc2 foreign key (company_id) references companies;
-alter table if exists recruiters add constraint FK2y12q5abxnkiui6i17eb04ys2 foreign key (main_technology_id) references technologies;
 alter table if exists recruiters add constraint FK1edjvp9udx35rophqr7imremb foreign key (user_id) references users;
