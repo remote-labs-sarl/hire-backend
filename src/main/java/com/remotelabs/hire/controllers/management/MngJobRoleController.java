@@ -6,6 +6,7 @@ import com.remotelabs.hire.dtos.responses.JobRoleResource;
 import com.remotelabs.hire.services.JobRoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,14 +20,14 @@ import static com.remotelabs.hire.constants.Constants.AUTHORISATION;
 @RestController
 @RequestMapping("/management/job-roles")
 @RequiredArgsConstructor
-@Tag(name = "ManagementCountryController")
+@Tag(name = "ManagementJobRoleController")
 public class MngJobRoleController {
 
     private final JobRoleService jobRoleService;
 
     @PostMapping(value = "", headers = AUTHORISATION)
     @Operation(description = "Add a job role")
-    public ResponseEntity<Void> addJobRole(@RequestBody AddJobRole addJobRole) {
+    public ResponseEntity<Void> addJobRole(@Valid @RequestBody AddJobRole addJobRole) {
 
         jobRoleService.addJobRole(addJobRole);
         return new ResponseEntity<>(HttpStatus.CREATED);
