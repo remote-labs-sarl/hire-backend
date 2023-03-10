@@ -61,7 +61,7 @@ class CandidateControllerIT extends BaseIntegrationIT {
 
         SearchCandidateDto searchCandidateDto = new SearchCandidateDto();
         searchCandidateDto.setMainTechnologyId(1L);
-        searchCandidateDto.setRole(DEVELOPER);
+        searchCandidateDto.setJobRoleId(DEVELOPER);
         searchCandidateDto.setSalaryExpectation(BigDecimal.valueOf(1000));
         searchCandidateDto.setCountryId(50L);
         searchCandidateDto.setYearsOfExperience(5);

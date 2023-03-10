@@ -7,17 +7,12 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "technologies")
-public class Technology {
+@Table(name = "soft_skills")
+public class SoftSkill {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
-    private String logoUrl;
-    private String tags;
 }

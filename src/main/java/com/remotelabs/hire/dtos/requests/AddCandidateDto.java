@@ -1,6 +1,6 @@
 package com.remotelabs.hire.dtos.requests;
 
-import com.remotelabs.hire.enums.CandidateRole;
+import com.remotelabs.hire.entities.CandidateTechSkill;
 import com.remotelabs.hire.enums.Language;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -21,20 +21,19 @@ public class AddCandidateDto {
     @NotEmpty(message = "Missing required field lastName")
     private String lastName;
     private String tags;
-    @NotNull(message = "Missing required field candidateType")
-    private CandidateRole candidateRole;
+    @NotNull(message = "Missing required field jobRoleId")
+    private Long jobRoleId;
     @NotNull(message = "Missing required field countryId")
     private Long countryId;
     @NotNull(message = "Missing required field salaryExpectation")
-    private BigDecimal salaryExpectation;
+    private SalaryExpectationDto salaryExpectation;
     @NotNull(message = "Missing required field yearsOfExperience")
     private Integer yearsOfExperience;
     @NotNull(message = "Missing required field noticePeriod")
-    private Integer noticePeriod;
+    private NoticePeriodDto noticePeriod;
     private List<Language> languages;
-    @NotNull(message = "Missing required field mainTechnologyId")
-    private Long mainTechnologyId;
-    private List<Long> additionalTechnologiesIds;
+    @NotNull(message = "Missing required field candidateSkillsDto")
+    private CandidateSkillsDto candidateSkillsDto;
     @NotNull(message = "Missing required field loginDetails")
     private AddUserDto loginDetails;
 }

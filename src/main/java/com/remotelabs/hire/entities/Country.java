@@ -14,7 +14,7 @@ import java.util.Date;
 public class Country {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     private Long id;
     @Column(unique = true, nullable = false)

@@ -200,8 +200,13 @@
                 <version>3.3.1</version>
                 <configuration>
                     <to>
-                        <image>registry.hub.docker.com/deniseldorado/hire</image>
+                        <image>registry.hub.docker.com/deniseldorado/hire:1.0</image>
                     </to>
+                    <container>
+                        <environment>
+                            <SPRING_PROFILES_ACTIVE>stage</SPRING_PROFILES_ACTIVE>
+                        </environment>
+                    </container>
                 </configuration>
             </plugin>
         </plugins>

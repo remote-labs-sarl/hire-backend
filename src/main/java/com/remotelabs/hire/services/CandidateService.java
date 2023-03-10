@@ -2,35 +2,37 @@ package com.remotelabs.hire.services;
 
 import com.remotelabs.hire.converters.CandidateConverter;
 import com.remotelabs.hire.dtos.requests.AddCandidateDto;
+import com.remotelabs.hire.dtos.requests.CandidateSkillsDto;
 import com.remotelabs.hire.dtos.requests.SearchCandidateDto;
 import com.remotelabs.hire.dtos.requests.UpdateCandidateDto;
 import com.remotelabs.hire.dtos.responses.CandidateResource;
-import com.remotelabs.hire.entities.Candidate;
-import com.remotelabs.hire.entities.Country;
-import com.remotelabs.hire.entities.Technology;
-import com.remotelabs.hire.entities.User;
+import com.remotelabs.hire.entities.*;
 import com.remotelabs.hire.enums.UserRole;
 import com.remotelabs.hire.exceptions.HireInternalException;
-import com.remotelabs.hire.repositories.CandidateRepository;
-import com.remotelabs.hire.repositories.CountryRepository;
+import com.remotelabs.hire.repositories.*;
 import com.remotelabs.hire.repositories.criteria.CandidateCriteriaRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CandidateService {
 
-    private final CountryRepository countryRepository;
-    private final TechnologyService technologyService;
     private final UserService userService;
+    private final CountryRepository countryRepository;
+    private final CandidateConverter candidateConverter;
     private final CandidateRepository candidateRepository;
     private final CandidateCriteriaRepository candidateCriteriaRepository;
-    private final CandidateConverter candidateConverter;
+    private final CandidateTechSkillRepository candidateTechSkillRepository;
+    private final CandidateSoftSkillRepository candidateSoftSkillRepository;
+    private final CandidateBusinessSkillRepository candidateBusinessSkillRepository;
+    private final NoticePeriodRepository noticePeriodRepository;
+    private final SalaryExpectationRepository salaryExpectationRepository;
 
     @Transactional
     public Page<CandidateResource> getCandidates(SearchCandidateDto searchCandidateDto, int page, int size) {
@@ -55,17 +57,22 @@ public class CandidateService {
         candidate.setMiddleName(addCandidateDto.getMiddleName());
         candidate.setLastName(addCandidateDto.getLastName());
         candidate.setUser(user);
-
-        Technology mainTechnology = technologyService.findById(addCandidateDto.getMainTechnologyId());
-        candidate.setMainTechnology(mainTechnology);
-
-        List<Technology> additionalTechnologies = technologyService
-                .findByIds(addCandidateDto.getAdditionalTechnologiesIds());
-        candidate.setAdditionalTechnologies(additionalTechnologies);
-
         candidateRepository.save(candidate);
-    }
 
+        NoticePeriod noticePeriod = new NoticePeriod();
+        noticePeriod.setInterval(addCandidateDto.getNoticePeriod().getNoticePeriodInterval());
+        noticePeriod.setAmount(addCandidateDto.getNoticePeriod().getAmount());
+        candidate.setNoticePeriod(noticePeriod);
+
+        SalaryExpectation salaryExpectation = new SalaryExpectation();
+        salaryExpectation.setType(addCandidateDto.getSalaryExpectation().getSalaryType());
+        salaryExpectation.setCurrency(addCandidateDto.getSalaryExpectation().getCurrency());
+        salaryExpectation.setAmount(addCandidateDto.getSalaryExpectation().getAmount());
+
+        candidate.setSalaryExpectation(salaryExpectation);
+
+        setSkills(addCandidateDto.getCandidateSkillsDto(), candidate.getId());
+    }
     @Transactional
     public void updateCandidate(Long candidateId, UpdateCandidateDto updateCandidateDto) {
 
@@ -75,22 +82,67 @@ public class CandidateService {
         candidate.setMiddleName(updateCandidateDto.getMiddleName());
         candidate.setLastName(updateCandidateDto.getLastName());
         candidate.setLanguages(updateCandidateDto.getLanguages());
-        candidate.setNoticePeriod(updateCandidateDto.getNoticePeriod());
-        candidate.setSalaryExpectation(updateCandidateDto.getSalaryExpectation());
-        candidate.setType(updateCandidateDto.getCandidateRole());
+
+        SalaryExpectation salaryExpectation = candidate.getSalaryExpectation();
+        salaryExpectation.setAmount(updateCandidateDto.getSalaryExpectation().getAmount());
+        salaryExpectation.setType(updateCandidateDto.getSalaryExpectation().getSalaryType());
+        salaryExpectation.setCurrency(updateCandidateDto.getSalaryExpectation().getCurrency());
+
+        NoticePeriod noticePeriod = candidate.getNoticePeriod();
+        noticePeriod.setAmount(updateCandidateDto.getNoticePeriod().getAmount());
+        noticePeriod.setInterval(updateCandidateDto.getNoticePeriod().getNoticePeriodInterval());
+
+        candidate.setNoticePeriod(noticePeriod);
+        candidate.setSalaryExpectation(salaryExpectation);
 
         candidateRepository.save(candidate);
-    }
-
-    private Candidate getById(Long candidateId) {
-
-        return candidateRepository.findById(candidateId)
-                .orElseThrow(() -> new HireInternalException("Account not found"));
     }
 
     @Transactional
     public void deleteCandidate(Long candidateId) {
 
         candidateRepository.deleteById(candidateId);
+    }
+
+    private void setSkills(CandidateSkillsDto candidateSkillsDto, Long candidateId) {
+
+        List<CandidateTechSkill> candidateTechSkills = new ArrayList<>();
+        candidateSkillsDto.getCandidateTechSkills().forEach(techSkill -> {
+
+            CandidateTechSkill candidateTechSkill = new CandidateTechSkill();
+            candidateTechSkill.setCandidateId(candidateId);
+            candidateTechSkill.setTechSkillId(techSkill.getTechSkillId());
+            candidateTechSkill.setMain(techSkill.isMain());
+            candidateTechSkill.setYearsOfExperience(techSkill.getYearsOfExperience());
+            candidateTechSkills.add(candidateTechSkill);
+        });
+
+        List<CandidateBusinessSkill> candidateBusinessSkills = new ArrayList<>();
+        candidateSkillsDto.getBusinessSkillsId().forEach(businessSkillId -> {
+
+            CandidateBusinessSkill candidateBusinessSkill = new CandidateBusinessSkill();
+            candidateBusinessSkill.setCandidateId(candidateId);
+            candidateBusinessSkill.setBusinessSkillId(businessSkillId);
+            candidateBusinessSkills.add(candidateBusinessSkill);
+        });
+
+        List<CandidateSoftSkill> candidateSoftSkills = new ArrayList<>();
+        candidateSkillsDto.getSoftSkillIds().forEach(softSkillId -> {
+
+            CandidateSoftSkill candidateSoftSkill = new CandidateSoftSkill();
+            candidateSoftSkill.setCandidateId(candidateId);
+            candidateSoftSkill.setSoftSkillId(softSkillId);
+            candidateSoftSkills.add(candidateSoftSkill);
+        });
+
+        candidateTechSkillRepository.saveAll(candidateTechSkills);
+        candidateBusinessSkillRepository.saveAll(candidateBusinessSkills);
+        candidateSoftSkillRepository.saveAll(candidateSoftSkills);
+    }
+
+    private Candidate getById(Long candidateId) {
+
+        return candidateRepository.findById(candidateId)
+                .orElseThrow(() -> new HireInternalException("Account not found"));
     }
 }

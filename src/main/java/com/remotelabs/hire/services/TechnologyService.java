@@ -4,7 +4,7 @@ import com.remotelabs.hire.converters.TechnologyConverter;
 import com.remotelabs.hire.dtos.requests.AddTechnologyDto;
 import com.remotelabs.hire.dtos.requests.UpdateTechnologyDto;
 import com.remotelabs.hire.dtos.responses.TechnologyResource;
-import com.remotelabs.hire.entities.Technology;
+import com.remotelabs.hire.entities.TechSkill;
 import com.remotelabs.hire.exceptions.HireInternalException;
 import com.remotelabs.hire.repositories.TechnologyRepository;
 import jakarta.transaction.Transactional;
@@ -31,29 +31,29 @@ public class TechnologyService {
             keyword = "";
         }
         Pageable pageable = PageRequest.of(page, size);
-        Page<Technology> technologies = technologyRepository.findTechnologies(keyword, pageable);
+        Page<TechSkill> technologies = technologyRepository.findTechnologies(keyword, pageable);
         return technologies.map(technologyConverter::convert);
     }
 
     @Transactional
     public void addTechnology(AddTechnologyDto addTechnologyDto) {
 
-        Technology technology = new Technology();
-        technology.setTags(addTechnologyDto.getTags());
-        technology.setName(addTechnologyDto.getName());
-        technology.setLogoUrl(addTechnologyDto.getLogoUrl());
+        TechSkill techSkill = new TechSkill();
+        techSkill.setTags(addTechnologyDto.getTags());
+        techSkill.setName(addTechnologyDto.getName());
+        techSkill.setLogoUrl(addTechnologyDto.getLogoUrl());
 
-        technologyRepository.save(technology);
+        technologyRepository.save(techSkill);
     }
 
     @Transactional
     public void updateTechnology(Long technologyId, UpdateTechnologyDto updateTechnologyDto) {
 
-        Technology technology = findById(technologyId);
-        technology.setLogoUrl(updateTechnologyDto.getLogoUrl());
-        technology.setTags(updateTechnologyDto.getTags());
-        technology.setName(updateTechnologyDto.getName());
-        technologyRepository.save(technology);
+        TechSkill techSkill = findById(technologyId);
+        techSkill.setLogoUrl(updateTechnologyDto.getLogoUrl());
+        techSkill.setTags(updateTechnologyDto.getTags());
+        techSkill.setName(updateTechnologyDto.getName());
+        technologyRepository.save(techSkill);
     }
 
     @Transactional
@@ -63,7 +63,7 @@ public class TechnologyService {
     }
 
     @Transactional
-    public Technology findById(Long technologyId) {
+    public TechSkill findById(Long technologyId) {
 
         return technologyRepository
                 .findById(technologyId)
@@ -71,7 +71,7 @@ public class TechnologyService {
     }
 
     @Transactional
-    public List<Technology> findByIds(List<Long> technologiesIds) {
+    public List<TechSkill> findByIds(List<Long> technologiesIds) {
 
         return technologyRepository.findByIds(technologiesIds);
     }

@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.remotelabs.hire.constants.Constants.AUTHORISATION;
+import static com.remotelabs.hire.constants.Constants.AUTH;
 
 @RestController
 @RequestMapping("/management/technologies")
@@ -22,7 +22,7 @@ public class MngTechnologyController {
 
     private final TechnologyService technologyService;
 
-    @PostMapping(value = "", headers = AUTHORISATION)
+    @PostMapping(value = "", headers = AUTH)
     @Operation(description = "Admin adding a technology")
     public ResponseEntity<Void> addTechnology(@RequestBody AddTechnologyDto addTechnologyDto) {
 
@@ -30,7 +30,7 @@ public class MngTechnologyController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "", headers = AUTHORISATION)
+    @GetMapping(value = "", headers = AUTH)
     @Operation(summary = "Get the list of technologies. ", description = "you can also filter by a keyword")
     public ResponseEntity<Page<TechnologyResource>> getTechnologies(@RequestParam int page,
                                                                     @RequestParam int size,
@@ -39,7 +39,7 @@ public class MngTechnologyController {
         return new ResponseEntity<>(technologyService.getTechnologies(page, size, keyword), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/{technologyId}", headers = AUTHORISATION)
+    @PutMapping(value = "/{technologyId}", headers = AUTH)
     @Operation(description = "Admin update technology details")
     public ResponseEntity<Void> updateTechnology(@PathVariable Long technologyId,
                                                  @RequestBody UpdateTechnologyDto updateTechnologyDto) {
@@ -48,7 +48,7 @@ public class MngTechnologyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{technologyId}", headers = AUTHORISATION)
+    @DeleteMapping(value = "/{technologyId}", headers = AUTH)
     @Operation(description = "Delete technology")
     public ResponseEntity<Void> deleteTechnology(@PathVariable Long technologyId) {
 

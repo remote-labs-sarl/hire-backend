@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.remotelabs.hire.constants.Constants.AUTHORISATION;
+import static com.remotelabs.hire.constants.Constants.AUTH;
 
 @Validated
 @RestController
@@ -24,7 +24,7 @@ public class MngCountryController {
 
     private final CountryService countryService;
 
-    @PostMapping(value = "/status", headers = AUTHORISATION)
+    @PostMapping(value = "/status", headers = AUTH)
     @Operation(description = "Activate or deactivate a country")
     public ResponseEntity<Void> activateOrDeactivateCountry(@RequestBody UpdateCountryStatusDto updateDto) {
 

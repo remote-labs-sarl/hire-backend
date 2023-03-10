@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.remotelabs.hire.constants.Constants.AUTHORISATION;
+import static com.remotelabs.hire.constants.Constants.AUTH;
 
 @Validated
 @RestController
@@ -25,14 +25,14 @@ public class MngAdminController {
 
     private final AdminService adminService;
 
-    @GetMapping(value = "", headers = AUTHORISATION)
+    @GetMapping(value = "", headers = AUTH)
     @Operation(description = "Get all admins")
     public ResponseEntity<Page<AdminResource>> getAllAdmins(@RequestParam int page, @RequestParam int size) {
 
         return new ResponseEntity<>(adminService.getAdmins(page, size), HttpStatus.OK);
     }
 
-    @PostMapping(value = "", headers = AUTHORISATION)
+    @PostMapping(value = "", headers = AUTH)
     @Operation(description = "Add an admin")
     public ResponseEntity<Void> addAdmin(@RequestBody @Valid AddAdminDto addAdminDto) {
 
@@ -40,7 +40,7 @@ public class MngAdminController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{adminId}", headers = AUTHORISATION)
+    @PutMapping(value = "/{adminId}", headers = AUTH)
     @Operation(description = "Update an admin")
     public ResponseEntity<Void> updateAdmin(@PathVariable Long adminId,
                                             @RequestBody @Valid UpdateAdminDto updateAdminDto) {
@@ -49,7 +49,7 @@ public class MngAdminController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{adminId}", headers = AUTHORISATION)
+    @DeleteMapping(value = "/{adminId}", headers = AUTH)
     @Operation(description = "Delete an admin")
     public ResponseEntity<Void> deleteAdmin(@PathVariable Long adminId) {
         adminService.deleteAdmin(adminId);

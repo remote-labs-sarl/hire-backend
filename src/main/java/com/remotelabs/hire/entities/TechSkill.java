@@ -3,15 +3,12 @@ package com.remotelabs.hire.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "companies")
-public class Company {
+@Table(name = "tech_skills")
+public class TechSkill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +16,8 @@ public class Company {
 
     @Column(nullable = false)
     private String name;
-    @CreationTimestamp
-    private Date creationDate;
+
+    @Column(nullable = false)
+    private String logoUrl;
+    private String tags;
 }

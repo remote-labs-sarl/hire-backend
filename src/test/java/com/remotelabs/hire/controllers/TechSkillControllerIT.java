@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Sql(scripts = {"/scripts/InsertTechnologies.sql"}, executionPhase = BEFORE_TEST_METHOD)
-class TechnologyControllerIT extends BaseIntegrationIT {
+class TechSkillControllerIT extends BaseIntegrationIT {
 
     // FIXME: 10/02/2023 assertion of length always return true even when there is no data
     @Test

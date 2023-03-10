@@ -2,17 +2,17 @@ package com.remotelabs.hire.converters;
 
 
 import com.remotelabs.hire.dtos.responses.TechnologyResource;
-import com.remotelabs.hire.entities.Technology;
+import com.remotelabs.hire.entities.TechSkill;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TechnologyConverter {
-    public TechnologyResource convert(Technology technology){
+    public TechnologyResource convert(TechSkill techSkill){
 
         return TechnologyResource.builder()
-                .name(technology.getName())
-                .logoUrl(technology.getLogoUrl())
-                .id(technology.getId())
+                .name(techSkill.getName())
+                .logoUrl(techSkill.getLogoUrl())
+                .id(techSkill.getId())
                 .build();
     }
 }

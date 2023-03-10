@@ -14,7 +14,7 @@ import java.util.Date;
 public class JobRole {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     private Long id;
     private String name;

@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.remotelabs.hire.constants.Constants.AUTHORISATION;
+import static com.remotelabs.hire.constants.Constants.AUTH;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -25,7 +25,7 @@ public class MngCandidateController {
 
     private final CandidateService candidateService;
 
-    @PostMapping(value = "/filter", headers = AUTHORISATION)
+    @PostMapping(value = "/filter", headers = AUTH)
     @Operation(description = "Admin Getting the list of candidates. ")
     public ResponseEntity<Page<CandidateResource>> getCandidates(@RequestBody SearchCandidateDto searchCandidateDto,
                                                                  @RequestParam int page,
@@ -34,7 +34,7 @@ public class MngCandidateController {
         return new ResponseEntity<>(candidateService.getCandidates(searchCandidateDto, page, size), OK);
     }
 
-    @PostMapping(value = "", headers = AUTHORISATION)
+    @PostMapping(value = "", headers = AUTH)
     @Operation(description = "Add candidate ")
     public ResponseEntity<Void> addCandidate(@RequestBody AddCandidateDto addCandidateDto) {
 
@@ -42,7 +42,7 @@ public class MngCandidateController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{candidateId}", headers = AUTHORISATION)
+    @PutMapping(value = "/{candidateId}", headers = AUTH)
     @Operation(description = "Update a candidate")
     public ResponseEntity<Void> updateCandidate(@PathVariable Long candidateId,
                                                @RequestBody @Valid UpdateCandidateDto updateCandidateDto){
@@ -51,7 +51,7 @@ public class MngCandidateController {
         return new ResponseEntity<>(OK);
     }
 
-    @DeleteMapping(value = "/{candidateId}", headers = AUTHORISATION)
+    @DeleteMapping(value = "/{candidateId}", headers = AUTH)
     public ResponseEntity<Void> deleteCandidate(@PathVariable Long candidateId){
 
         candidateService.deleteCandidate(candidateId);

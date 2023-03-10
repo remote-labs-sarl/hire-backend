@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.remotelabs.hire.constants.Constants.AUTHORISATION;
+import static com.remotelabs.hire.constants.Constants.AUTH;
 
 @Validated
 @RestController
@@ -25,7 +25,7 @@ public class MngJobRoleController {
 
     private final JobRoleService jobRoleService;
 
-    @PostMapping(value = "", headers = AUTHORISATION)
+    @PostMapping(value = "", headers = AUTH)
     @Operation(description = "Add a job role")
     public ResponseEntity<Void> addJobRole(@Valid @RequestBody AddJobRole addJobRole) {
 
@@ -33,14 +33,14 @@ public class MngJobRoleController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "", headers = AUTHORISATION)
+    @GetMapping(value = "", headers = AUTH)
     @Operation(description = "Get all job roles")
     public ResponseEntity<Page<JobRoleResource>> getJobRoles(@RequestParam int page, @RequestParam int size) {
 
         return new ResponseEntity<>(jobRoleService.getJobRoles(page, size), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/{jobRoleId}", headers = AUTHORISATION)
+    @PutMapping(value = "/{jobRoleId}", headers = AUTH)
     @Operation(description = "Update a job role")
     public ResponseEntity<Void> updateJobRole(@PathVariable Long jobRoleId, @RequestBody UpdateJobRole updateJobRole) {
 
@@ -48,7 +48,7 @@ public class MngJobRoleController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{jobRoleId}", headers = AUTHORISATION)
+    @DeleteMapping(value = "/{jobRoleId}", headers = AUTH)
     @Operation(description = "Delete job role")
     public ResponseEntity<Void> deleteJobRole(Long jobRoleId) {
 

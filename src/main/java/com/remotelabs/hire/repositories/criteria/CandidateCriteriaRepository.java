@@ -3,7 +3,7 @@ package com.remotelabs.hire.repositories.criteria;
 import com.remotelabs.hire.dtos.requests.SearchCandidateDto;
 import com.remotelabs.hire.entities.Candidate;
 import com.remotelabs.hire.entities.Country;
-import com.remotelabs.hire.entities.Technology;
+import com.remotelabs.hire.entities.TechSkill;
 import com.remotelabs.hire.enums.SortCandidateBy;
 import com.remotelabs.hire.enums.SortOrder;
 import jakarta.persistence.EntityManager;
@@ -39,7 +39,7 @@ public class CandidateCriteriaRepository {
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         Root<Candidate> candidateRoot = criteriaQuery.from(Candidate.class);
         Join<Candidate, Country> candidateCountryJoin = candidateRoot.join("country", JoinType.INNER);
-        Join<Candidate, Technology> candidateTechnologyJoin = candidateRoot.join("mainTechnology", JoinType.INNER);
+        Join<Candidate, TechSkill> candidateTechnologyJoin = candidateRoot.join("mainTechnology", JoinType.INNER);
 
         List<Predicate> predicates = new ArrayList<>();
 
@@ -68,7 +68,7 @@ public class CandidateCriteriaRepository {
                                      CriteriaBuilder criteriaBuilder,
                                      Root<Candidate> candidate,
                                      Join<Candidate, Country> country,
-                                     Join<Candidate, Technology> technology,
+                                     Join<Candidate, TechSkill> technology,
                                      List<Predicate> predicates) {
 
         if (searchCandidateDto.getMainTechnologyId() != null) {
@@ -76,10 +76,10 @@ public class CandidateCriteriaRepository {
             predicates.add(criteriaBuilder.equal(technology.get("id"),
                     searchCandidateDto.getMainTechnologyId()));
         }
-        if (searchCandidateDto.getRole() != null) {
+        if (searchCandidateDto.getJobRoleId() != null) {
 
-            predicates.add(criteriaBuilder.equal(criteriaBuilder.lower(candidate.get("type")),
-                    searchCandidateDto.getRole().name().toLowerCase()));
+            predicates.add(criteriaBuilder.equal(criteriaBuilder.lower(candidate.get("job_role_id")),
+                    searchCandidateDto.getJobRoleId()));
         }
         if (searchCandidateDto.getSalaryExpectation() != null) {
 

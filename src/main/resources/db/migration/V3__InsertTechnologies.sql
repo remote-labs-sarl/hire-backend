@@ -1,4 +1,4 @@
-INSERT INTO technologies (id, name, logo_url, tags)
+INSERT INTO tech_skills (id, name, logo_url, tags)
 VALUES (1, 'Java',
         'https://banner2.cleanpng.com/20180621/jow/kisspng-plain-old-java-object-programming-language-compute-5b2b6405b39ad9.4848800015295703097357.jpg',
         'java, spring, boot, jee, j2m, android, servlet, applet'),
