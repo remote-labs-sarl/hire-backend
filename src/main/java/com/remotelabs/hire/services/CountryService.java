@@ -27,6 +27,13 @@ public class CountryService {
     }
 
     @Transactional
+    public List<CountryResource> findAllCountries() {
+
+        List<Country> countries = countryRepository.findAll();
+        return countries.stream().map(countryConverter::convert).toList();
+    }
+
+    @Transactional
     public void activateDeactivateCountry(UpdateCountryStatusDto updateCountryStatusDto) {
 
         Country country = findById(updateCountryStatusDto.getCountryId());

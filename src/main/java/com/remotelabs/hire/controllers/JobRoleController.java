@@ -2,6 +2,7 @@ package com.remotelabs.hire.controllers;
 
 import com.remotelabs.hire.dtos.responses.JobRoleResource;
 import com.remotelabs.hire.services.JobRoleService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,12 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/public/job-roles")
 @RequiredArgsConstructor
-@Tag(name = "CountryController")
+@Tag(name = "JobRoleController")
 public class JobRoleController {
 
     private final JobRoleService jobRoleService;
 
     @GetMapping("")
+    @Operation(description = "Get all job roles")
     public ResponseEntity<Page<JobRoleResource>>getJobRoles(@RequestParam int page,@RequestParam int size){
 
         return new ResponseEntity<>(jobRoleService.getJobRoles(page, size), HttpStatus.OK);

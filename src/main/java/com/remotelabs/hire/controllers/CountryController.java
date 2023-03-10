@@ -26,6 +26,6 @@ public class CountryController {
     @Operation(summary = "Get the list of active countries. ", description = "Countries available for hiring")
     public ResponseEntity<List<CountryResource>> getCountries() {
 
-        return new ResponseEntity<>(countryService.findActiveCountries(), OK);
+        return new ResponseEntity<>(countryService.findAllCountries(), OK);
     }
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/public/soft-skills")
 @RequiredArgsConstructor
-@Tag(name = "BusinessSkillsController")
+@Tag(name = "SoftSkillsController")
 public class SoftSkillController {
 
     private final SoftSkillService softSkillService;
