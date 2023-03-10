@@ -42,7 +42,7 @@ public class SecurityConfig {
                     return corsConfig;
                 }).and().csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/management/**").hasRole("ADMIN")
+                .requestMatchers("/management/**").hasAuthority("ADMIN")
                 .requestMatchers("/public/**").permitAll()
                 .requestMatchers(req -> req.getRequestURI().contains("swagger-ui")).permitAll()
                 .requestMatchers(req -> req.getRequestURI().contains("api-docs")).permitAll()

@@ -19,7 +19,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/management/recruiters")
 @RequiredArgsConstructor
 @Tag(name = "ManagementRecruiterController")
-public class MngRecuiterController {
+public class MngRecruiterController {
 
     private final RecruiterService recruiterService;
 

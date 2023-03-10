@@ -13,10 +13,10 @@ import java.util.List;
 @Repository
 public interface TechnologyRepository extends JpaRepository<TechSkill, Long> {
 
-    @Query(value = "SELECT * FROM technologies WHERE lower(name) LIKE CONCAT('%',:keyword,'%')" +
+    @Query(value = "SELECT * FROM tech_skills WHERE lower(name) LIKE CONCAT('%',:keyword,'%')" +
             " OR lower(tags) LIKE CONCAT('%',:keyword,'%') ORDER BY name ASC", nativeQuery = true)
     Page<TechSkill> findTechnologies(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query(value = "SELECT * FROM technologies WHERE id in (ids)", nativeQuery = true)
+    @Query(value = "SELECT * FROM tech_skills WHERE id in (ids)", nativeQuery = true)
     List<TechSkill> findByIds(@Param("ids") List<Long> ids);
 }
