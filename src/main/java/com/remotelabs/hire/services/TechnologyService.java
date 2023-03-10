@@ -25,7 +25,7 @@ public class TechnologyService {
     private final TechnologyConverter technologyConverter;
 
     @Transactional
-    public Page<TechnologyResource> getTechnologies(int page, int size, String keyword) {
+    public Page<TechnologyResource> findTechSkills(int page, int size, String keyword) {
 
         if (StringUtils.isEmpty(keyword)) {
             keyword = "";
@@ -36,7 +36,7 @@ public class TechnologyService {
     }
 
     @Transactional
-    public void addTechnology(AddTechnologyDto addTechnologyDto) {
+    public void addTechSkill(AddTechnologyDto addTechnologyDto) {
 
         TechSkill techSkill = new TechSkill();
         techSkill.setTags(addTechnologyDto.getTags());

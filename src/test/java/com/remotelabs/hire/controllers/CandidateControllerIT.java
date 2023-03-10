@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.remotelabs.hire.enums.CandidateRole.DEVELOPER;
 import static com.remotelabs.hire.enums.Language.ENGLISH;
 import static com.remotelabs.hire.enums.Language.FRENCH;
 import static org.hamcrest.Matchers.greaterThan;
@@ -40,7 +39,7 @@ class CandidateControllerIT extends BaseIntegrationIT {
     void testCandidateFilter() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/candidates/filter")
+                        .post("/public/candidates")
                         .param("page", "0")
                         .param("size", "10")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +60,6 @@ class CandidateControllerIT extends BaseIntegrationIT {
 
         SearchCandidateDto searchCandidateDto = new SearchCandidateDto();
         searchCandidateDto.setMainTechnologyId(1L);
-        searchCandidateDto.setJobRoleId(DEVELOPER);
         searchCandidateDto.setSalaryExpectation(BigDecimal.valueOf(1000));
         searchCandidateDto.setCountryId(50L);
         searchCandidateDto.setYearsOfExperience(5);

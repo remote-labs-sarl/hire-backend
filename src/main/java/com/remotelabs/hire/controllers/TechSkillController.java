@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/public/technologies")
+@RequestMapping("/public/tech-skills")
 @RequiredArgsConstructor
-@Tag(name = "TechnologyController")
-public class TechnologyController {
+@Tag(name = "TechSkillController")
+public class TechSkillController {
 
     private final TechnologyService technologyService;
 
     @GetMapping("")
     @Operation(summary = "Get the list of technologies. ", description = "you can also filter by a keyword")
-    public ResponseEntity<Page<TechnologyResource>> getTechnologies(@RequestParam int page,
+    public ResponseEntity<Page<TechnologyResource>> findTechSkills(@RequestParam int page,
                                                                     @RequestParam int size,
                                                                     @RequestParam(required = false) String keyword){
 
-        return new ResponseEntity<>(technologyService.getTechnologies(page, size, keyword), OK);
+        return new ResponseEntity<>(technologyService.findTechSkills(page, size, keyword), OK);
     }
 }

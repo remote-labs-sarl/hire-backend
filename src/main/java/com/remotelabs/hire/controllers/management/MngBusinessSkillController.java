@@ -39,7 +39,7 @@ public class MngBusinessSkillController {
 
     @GetMapping(value = "", headers = AUTH)
     @Operation(description = "Find business skills paginated")
-    public ResponseEntity<Page<BusinessSkillResource>> findAll(int page, int size) {
+    public ResponseEntity<Page<BusinessSkillResource>> findPaginated(int page, int size) {
 
         return new ResponseEntity<>(businessSkillService.findBusinessSkills(page, size), HttpStatus.OK);
     }
