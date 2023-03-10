@@ -15,4 +15,6 @@ public class CandidateResource {
     private String lastName;
     private double percentageMatch;
     private String country;
+
+    private String picUrl;
 }

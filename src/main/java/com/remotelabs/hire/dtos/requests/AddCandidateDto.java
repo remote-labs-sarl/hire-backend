@@ -34,6 +34,7 @@ public class AddCandidateDto {
     private List<Language> languages;
     @NotNull(message = "Missing required field candidateSkillsDto")
     private CandidateSkillsDto candidateSkillsDto;
+    private String picUrl;
     @NotNull(message = "Missing required field loginDetails")
     private AddUserDto loginDetails;
 }

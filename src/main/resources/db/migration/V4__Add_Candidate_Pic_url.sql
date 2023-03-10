@@ -1,0 +1,1 @@
+ALTER TABLE candidates ADD pic_url VARCHAR(255);

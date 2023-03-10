@@ -35,6 +35,7 @@ public class UpdateCandidateDto {
     @NotNull(message = "Missing required field mainTechnologyId")
     private Long mainTechnologyId;
     private List<Long> additionalTechnologiesIds;
+    private String picUrl;
     @NotNull(message = "Missing required field loginDetails")
     private AddUserDto loginDetails;
 }

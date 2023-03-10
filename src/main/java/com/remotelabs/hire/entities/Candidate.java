@@ -36,6 +36,7 @@ public class Candidate {
     private User user;
     @CreationTimestamp
     private Date creationDate;
+    private String picUrl;
 
     @ElementCollection
     @CollectionTable(

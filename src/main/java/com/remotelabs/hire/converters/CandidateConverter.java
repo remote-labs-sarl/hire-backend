@@ -15,6 +15,7 @@ public class CandidateConverter {
                 .middleName(candidate.getMiddleName())
                 .lastName(candidate.getLastName())
                 .country(candidate.getCountry().getName())
+                .picUrl(candidate.getPicUrl())
                 .build();
     }
 }

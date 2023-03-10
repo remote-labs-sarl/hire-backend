@@ -73,6 +73,7 @@ public class CandidateService {
 
         setSkills(addCandidateDto.getCandidateSkillsDto(), candidate.getId());
     }
+
     @Transactional
     public void updateCandidate(Long candidateId, UpdateCandidateDto updateCandidateDto) {
 
@@ -82,6 +83,7 @@ public class CandidateService {
         candidate.setMiddleName(updateCandidateDto.getMiddleName());
         candidate.setLastName(updateCandidateDto.getLastName());
         candidate.setLanguages(updateCandidateDto.getLanguages());
+        candidate.setPicUrl(updateCandidateDto.getPicUrl());
 
         SalaryExpectation salaryExpectation = candidate.getSalaryExpectation();
         salaryExpectation.setAmount(updateCandidateDto.getSalaryExpectation().getAmount());
