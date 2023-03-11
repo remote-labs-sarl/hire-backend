@@ -11,7 +11,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Table(name = "admins")
-public class Admin {
+public class Admin{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +27,7 @@ public class Admin {
 
     @CreationTimestamp
     private Date creationDate;
+
+    StringBuilder stringBuilder;
+    StringBuffer stringBuffer;
 }

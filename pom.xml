@@ -200,11 +200,14 @@
                 <version>3.3.1</version>
                 <configuration>
                     <to>
-                        <image>registry.hub.docker.com/deniseldorado/hire:1.4</image>
+                        <image>registry.hub.docker.com/deniseldorado/hire:1.5</image>
                     </to>
                     <container>
                         <environment>
                             <SPRING_PROFILES_ACTIVE>stage</SPRING_PROFILES_ACTIVE>
+                            <SPRING_DATASOURCE_URL>jdbc:postgresql://db-postgresql-fra1-86535-do-user-13682969-0.b.db.ondigitalocean.com:25060/defaultdb</SPRING_DATASOURCE_URL>
+                            <SPRING_DATASOURCE_USERNAME>doadmin</SPRING_DATASOURCE_USERNAME>
+                            <SPRING_DATASOURCE_PASSWORD>AVNS_dgpwVRVKUZS9lsmwPgd</SPRING_DATASOURCE_PASSWORD>
                         </environment>
                     </container>
                 </configuration>

@@ -11,8 +11,6 @@ spring:
     hibernate.ddl-auto: none
     generate-ddl: true
     show-sql: true
-  flyway:
-    enabled: true
 jwt:
   secretKey: "2F413F4428472B4B6250655368566D597133743677397A244226452948404D63"
 
